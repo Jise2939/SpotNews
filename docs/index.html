@@ -11,105 +11,125 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#0e0e14;color:#e8e8ee;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:#13131f;color:#eeeef5;overflow-x:hidden}
 
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 24px;background:linear-gradient(160deg,#0e0e14 0%,#161628 60%,#1a1040 100%);position:relative}
-#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 70%,rgba(233,69,96,0.08) 0%,transparent 70%);pointer-events:none}
-.hero-tag{display:inline-block;border:1px solid rgba(233,69,96,0.4);color:#e94560;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:28px}
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 24px;background:linear-gradient(160deg,#13131f 0%,#1a1a30 60%,#1e1248 100%);position:relative}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 70%,rgba(233,69,96,0.13) 0%,transparent 70%);pointer-events:none}
+.hero-tag{display:inline-block;border:1px solid rgba(233,69,96,0.55);color:#ff6080;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:28px}
 #hero h1{font-size:clamp(32px,6vw,64px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:800px}
-#hero h1 em{font-style:normal;color:#e94560}
-#hero p.lead{font-size:clamp(15px,2vw,18px);color:rgba(232,232,238,0.65);max-width:540px;line-height:1.7;margin-bottom:48px}
+#hero h1 em{font-style:normal;color:#ff4d6d}
+#hero p.lead{font-size:clamp(15px,2vw,18px);color:rgba(238,238,245,0.72);max-width:540px;line-height:1.7;margin-bottom:48px}
 .hero-stats{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;margin-bottom:60px}
-.hs-num{display:block;font-size:clamp(36px,5vw,52px);font-weight:800;color:#e94560;line-height:1}
-.hs-label{display:block;font-size:12px;color:rgba(232,232,238,0.4);letter-spacing:1px;margin-top:5px;text-align:center}
+.hs-num{display:block;font-size:clamp(36px,5vw,52px);font-weight:800;color:#ff4d6d;line-height:1}
+.hs-label{display:block;font-size:12px;color:rgba(238,238,245,0.45);letter-spacing:1px;margin-top:5px;text-align:center}
 .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(232,232,238,0.25);font-size:12px;letter-spacing:1px;animation:bounce 2s ease-in-out infinite}
 .scroll-hint svg{width:18px;height:18px;stroke:currentColor;fill:none}
 @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 
-#story{position:relative;background:#0e0e14}
+#story{position:relative;background:#13131f}
 .sticky-map{position:sticky;top:0;height:100vh;width:55%;float:left;overflow:hidden}
 #trail-map{width:100%;height:100%}
 /* Leaflet 覆蓋 */
 .leaflet-container{background:#111118!important}
-.trail-tooltip{background:rgba(14,14,20,0.9);border:1px solid rgba(255,255,255,0.12);color:#e8e8ee;font-size:12px;padding:6px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.4);line-height:1.6;pointer-events:none}
+.trail-tooltip{background:rgba(18,18,28,0.95);border:1px solid rgba(255,255,255,0.18);color:#eeeef5;font-size:12px;padding:6px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.5);line-height:1.6;pointer-events:none}
 .trail-tooltip b{font-weight:700}
-.story-steps{margin-left:55%;padding:0 0 120vh 0;background:#0e0e14}
+.story-steps{margin-left:55%;padding:0 0 120vh 0;background:#13131f}
 .step{min-height:90vh;display:flex;align-items:center;padding:60px 48px 60px 44px}
 .step-inner{max-width:400px}
 .step-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-size:13px;font-weight:700;margin-bottom:14px}
-.step-inner h2{font-size:clamp(19px,2.4vw,26px);font-weight:800;line-height:1.2;margin-bottom:12px}
-.step-inner p{font-size:14px;color:rgba(232,232,238,0.62);line-height:1.8;margin-bottom:9px}
+.step-inner h2{font-size:clamp(19px,2.4vw,26px);font-weight:800;line-height:1.2;margin-bottom:12px;color:#eeeef5}
+.step-inner p{font-size:14px;color:rgba(238,238,245,0.68);line-height:1.8;margin-bottom:9px}
 .stat-pill{display:inline-block;padding:2px 9px;border-radius:11px;font-size:12px;font-weight:700;margin:3px 2px}
-.step-div{border:none;border-top:1px solid rgba(255,255,255,0.06);margin:14px 0}
+.step-div{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:14px 0}
 .c-mac{color:#e74c3c}.c-wil{color:#3498db}.c-hk{color:#27ae60}.c-lau{color:#f39c12}
 .bg-mac{background:rgba(231,76,60,0.14);color:#e74c3c}
 .bg-wil{background:rgba(52,152,219,0.14);color:#3498db}
 .bg-hk{background:rgba(39,174,96,0.14);color:#27ae60}
 .bg-lau{background:rgba(243,156,18,0.14);color:#f39c12}
 
-#gps-section{clear:both;background:#111118;padding:80px 0 0}
+#gps-section{clear:both;background:#1a1a28;padding:80px 0 0}
 .sec-head{max-width:680px;margin:0 auto 28px;padding:0 32px;text-align:center}
-.sec-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#e94560;margin-bottom:10px}
-.sec-head h2{font-size:clamp(20px,3vw,32px);font-weight:800;margin-bottom:12px}
-.sec-head p{font-size:14px;color:rgba(232,232,238,0.55);line-height:1.75}
+.sec-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ff6080;margin-bottom:10px}
+.sec-head h2{font-size:clamp(20px,3vw,32px);font-weight:800;margin-bottom:12px;color:#eeeef5}
+.sec-head p{font-size:14px;color:rgba(238,238,245,0.6);line-height:1.75}
 .note-bar{max-width:680px;margin:0 auto 16px;padding:0 32px}
-.note-bar p{background:rgba(255,193,7,0.07);border-left:3px solid rgba(255,193,7,0.35);padding:9px 13px;font-size:13px;color:rgba(232,232,238,0.45);border-radius:0 6px 6px 0;line-height:1.6}
+.note-bar p{background:rgba(255,193,7,0.09);border-left:3px solid rgba(255,193,7,0.45);padding:9px 13px;font-size:13px;color:rgba(238,238,245,0.5);border-radius:0 6px 6px 0;line-height:1.6}
 .full-map{width:100%;height:88vh;min-height:600px}
 .full-map iframe{width:100%;height:100%;border:none;display:block}
-.map-credit{background:#0a0a10;text-align:center;padding:13px;font-size:11px;color:rgba(232,232,238,0.2);letter-spacing:0.5px}
+.map-credit{background:#0e0e18;text-align:center;padding:13px;font-size:11px;color:rgba(238,238,245,0.25);letter-spacing:0.5px}
 
-#method{background:#0e0e14;padding:80px 32px}
+#method{background:#13131f;padding:80px 32px}
 .method-inner{max-width:660px;margin:0 auto}
 .method-inner>h2{font-size:22px;font-weight:800;margin-bottom:24px}
 .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.mc{background:#161622;border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:18px}
-.mc h3{font-size:11px;font-weight:700;color:#e94560;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px}
+.mc{background:#1e1e2e;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px}
+.mc h3{font-size:11px;font-weight:700;color:#ff6080;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px}
 .mc ul{list-style:none;padding:0}
-.mc li{font-size:12px;color:rgba(232,232,238,0.5);line-height:1.9;padding-left:12px;position:relative}
-.mc li::before{content:'·';position:absolute;left:0;color:#e94560}
+.mc li{font-size:12px;color:rgba(238,238,245,0.6);line-height:1.9;padding-left:12px;position:relative}
+.mc li::before{content:'·';position:absolute;left:0;color:#ff6080}
 
-footer{background:#080810;text-align:center;padding:34px 24px;font-size:11px;color:rgba(232,232,238,0.22);letter-spacing:0.5px}
-footer a{color:rgba(232,232,238,0.38);text-decoration:none}
-footer a:hover{color:#e94560}
+footer{background:#0a0a14;text-align:center;padding:34px 24px;font-size:11px;color:rgba(238,238,245,0.28);letter-spacing:0.5px}
+footer a{color:rgba(238,238,245,0.45);text-decoration:none}
+footer a:hover{color:#ff4d6d}
 
 /* ── 退賽高峰圖表 ── */
-#peak-section{background:#0e0e14;padding:80px 0 60px}
-.peak-charts{max-width:1000px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-.chart-card{background:#161622;border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:28px 24px}
-.chart-title{font-size:13px;font-weight:700;color:rgba(232,232,238,0.55);letter-spacing:1px;text-transform:uppercase;margin-bottom:22px}
-.chart-note{font-size:12px;color:rgba(232,232,238,0.38);line-height:1.7;margin-top:16px}
+#peak-section{background:#13131f;padding:80px 0 60px}
+.peak-charts{max-width:1000px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+.chart-card{background:#1e1e2e;border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column}
+.chart-title{font-size:13px;font-weight:700;color:rgba(238,238,245,0.65);letter-spacing:1px;text-transform:uppercase;margin-bottom:22px}
+.chart-note{font-size:12px;color:rgba(238,238,245,0.45);line-height:1.7;margin-top:16px}
 
 /* 柱狀圖 */
-.bar-chart{display:flex;align-items:flex-end;gap:10px;height:180px;padding-bottom:0}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;padding-bottom:0}
 .bar-group{display:flex;flex-direction:column;align-items:center;flex:1;gap:0}
-.bar-wrap{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
-.bar{width:100%;height:var(--h);background:var(--clr);border-radius:4px 4px 0 0;transition:opacity .2s;opacity:.85}
+.bar-wrap{width:100%;height:140px;display:flex;align-items:flex-end;justify-content:center}
+.bar{width:100%;height:var(--h,0%);min-height:2px;background:var(--clr);border-radius:4px 4px 0 0;transition:opacity .2s;opacity:.9}
 .bar-group:hover .bar{opacity:1}
-.bar-group.highlight .bar{box-shadow:0 0 12px var(--clr)}
-.bar-label{font-size:11px;color:rgba(232,232,238,0.45);margin-top:7px;white-space:nowrap}
-.bar-val{font-size:12px;font-weight:700;color:rgba(232,232,238,0.7);margin-top:2px}
-.bar-group.highlight .bar-val{color:#8e44ad}
+.bar-group.highlight .bar{box-shadow:0 0 16px var(--clr)}
+.bar-label{font-size:11px;color:rgba(238,238,245,0.5);margin-top:7px;white-space:nowrap}
+.bar-val{font-size:12px;font-weight:700;color:rgba(238,238,245,0.8);margin-top:2px}
+.bar-group.highlight .bar-val{color:#b06aff}
 
 /* 水平條狀圖 */
 .seg-chart{display:flex;flex-direction:column;gap:14px}
 .seg-row{display:flex;align-items:center;gap:10px}
-.seg-label{width:72px;font-size:11px;color:rgba(232,232,238,0.55);display:flex;align-items:center;gap:5px;flex-shrink:0}
+.seg-label{width:72px;font-size:11px;color:rgba(238,238,245,0.65);display:flex;align-items:center;gap:5px;flex-shrink:0}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.seg-bar-wrap{flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:28px;position:relative;overflow:hidden}
-.seg-bar{height:100%;width:var(--w);background:var(--clr);border-radius:4px;display:flex;align-items:center;padding-left:8px;transition:width .6s ease;opacity:.85}
+.seg-bar-wrap{flex:1;background:rgba(255,255,255,0.07);border-radius:4px;height:28px;position:relative;overflow:hidden}
+.seg-bar{height:100%;width:var(--w);background:var(--clr);border-radius:4px;display:flex;align-items:center;padding-left:8px;transition:width .6s ease;opacity:.9}
 .seg-row:hover .seg-bar{opacity:1}
 .seg-val{font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
-.seg-pct{width:50px;font-size:11px;color:rgba(232,232,238,0.45);text-align:right;flex-shrink:0}
-.highlight-row .seg-pct{color:#3498db;font-weight:700}
+.seg-pct{width:50px;font-size:11px;color:rgba(238,238,245,0.5);text-align:right;flex-shrink:0}
+.highlight-row .seg-pct{color:#5dade2;font-weight:700}
 
 /* mini breakdown */
-.mini-breakdown{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)}
-.mb-title{font-size:11px;color:rgba(232,232,238,0.35);letter-spacing:0.5px;margin-bottom:12px}
+.mini-breakdown{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08)}
+.mb-title{font-size:11px;color:rgba(238,238,245,0.4);letter-spacing:0.5px;margin-bottom:12px}
 .mb-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.mb-label{width:60px;font-size:11px;color:rgba(232,232,238,0.5);flex-shrink:0}
-.mb-track{flex:1;background:rgba(255,255,255,0.06);border-radius:3px;height:10px;overflow:hidden}
+.mb-label{width:60px;font-size:11px;color:rgba(238,238,245,0.6);flex-shrink:0}
+.mb-track{flex:1;background:rgba(255,255,255,0.08);border-radius:3px;height:10px;overflow:hidden}
 .mb-fill{height:100%;width:var(--w);border-radius:3px}
-.mb-num{width:80px;font-size:11px;color:rgba(232,232,238,0.45);text-align:right;flex-shrink:0}
+.mb-num{width:80px;font-size:11px;color:rgba(238,238,245,0.5);text-align:right;flex-shrink:0}
+
+/* 24小時折線圖 */
+.peak-hour-card{max-width:1000px;margin:28px auto 0;padding:0 32px}
+.hour-chart-wrap{background:#1e1e2e;border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:28px 24px}
+#line-chart-svg{width:100%;display:block;overflow:visible}
+.lc-grid line{stroke:rgba(255,255,255,0.07);stroke-width:1}
+.lc-grid line.base{stroke:rgba(255,255,255,0.15)}
+.lc-area{fill:url(#areaGrad);opacity:0.55}
+.lc-line{fill:none;stroke:#ff4d6d;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.lc-dot{fill:#ff4d6d;stroke:#1e1e2e;stroke-width:2;cursor:pointer;transition:r .15s}
+.lc-dot:hover,.lc-dot.hi{r:6;fill:#ff8099}
+.lc-dot.zero{fill:#3a3a52;stroke:#3a3a52}
+.lc-xlabel{font-size:10px;fill:rgba(238,238,245,0.3);text-anchor:middle;font-family:Inter,sans-serif}
+.lc-ylabel{font-size:10px;fill:rgba(238,238,245,0.35);text-anchor:end;font-family:Inter,sans-serif}
+.lc-tooltip{pointer-events:none}
+.lc-tooltip rect{fill:#2a2a40;rx:6;stroke:rgba(255,255,255,0.15);stroke-width:1}
+.lc-tooltip text{font-size:12px;fill:#eeeef5;font-family:Inter,sans-serif;font-weight:600}
+.hour-legend{display:flex;gap:18px;margin-top:14px;flex-wrap:wrap}
+.hour-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(238,238,245,0.5)}
+.hour-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
 @media(max-width:768px){
   .sticky-map{position:relative;width:100%;height:50vh;float:none}
@@ -324,11 +344,36 @@ footer a:hover{color:#e94560}
     </div>
 
   </div>
+
+  <!-- 24小時退賽時刻分布 -->
+  <div class="peak-hour-card">
+    <div class="hour-chart-wrap">
+      <h3 class="chart-title">退賽發生在幾點？— 24 小時折線圖</h3>
+      <svg id="line-chart-svg" viewBox="0 0 760 180" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ff4d6d" stop-opacity="0.4"/>
+            <stop offset="100%" stop-color="#ff4d6d" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="nightGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#ff4d6d" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#ff4d6d" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- 由 JS 繪製 -->
+      </svg>
+      <div class="hour-legend">
+        <div class="hour-legend-item"><div class="hour-legend-dot" style="background:#ff4d6d"></div>夜間退賽（18:00–05:59）26 人 · 52%</div>
+        <div class="hour-legend-item"><div class="hour-legend-dot" style="background:rgba(238,238,245,0.2)"></div>日間退賽（06:00–17:59）24 人 · 48%</div>
+        <div class="hour-legend-item" style="margin-left:auto;font-size:10px;color:rgba(238,238,245,0.3)">hover 查看各小時人數</div>
+      </div>
+      <p class="chart-note">18:00、19:00、22:00 各有 5 人退賽，並列最高峰；06:00–10:00 無任何退賽記錄。夜間山路的黑暗與體力累積，是退賽的關鍵時刻。</p>
+    </div>
+  </div>
+
 </section>
 
 <section id="method">
-  <div class="method-inner">
-    <h2>數據說明</h2>
     <div class="method-grid">
       <div class="mc">
         <h3>數據來源</h3>
@@ -375,6 +420,120 @@ footer a:hover{color:#e94560}
 
 <script src="route_data.js"></script>
 <script>
+/* ── 24小時折線圖 ── */
+(function(){
+  var DATA = [2,4,1,2,1,1,0,1,1,0,0,2,3,3,3,3,0,2,5,5,1,1,5,4];
+  // 夜間：小時 >= 18 或 < 6
+  var NIGHT = DATA.map(function(_,i){ return i>=18 || i<6; });
+  var MAX = 5;
+  var W = 760, H = 180;
+  var PAD = {l:30, r:12, t:14, b:28};
+  var cw = W - PAD.l - PAD.r;
+  var ch = H - PAD.t - PAD.b;
+
+  function cx(i){ return PAD.l + (i / 23) * cw; }
+  function cy(v){ return PAD.t + ch - (v / MAX) * ch; }
+
+  var svg = document.getElementById('line-chart-svg');
+  var ns = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs){
+    var e = document.createElementNS(ns, tag);
+    Object.keys(attrs).forEach(function(k){ e.setAttribute(k, attrs[k]); });
+    return e;
+  }
+  function txt(tag, attrs, content){
+    var e = el(tag, attrs);
+    e.textContent = content;
+    return e;
+  }
+
+  // 網格線 + Y 軸標籤
+  var gridG = el('g', {'class':'lc-grid'});
+  [0,1,2,3,4,5].forEach(function(v){
+    var y = cy(v);
+    var line = el('line', {x1:PAD.l, y1:y, x2:W-PAD.r, y2:y});
+    if(v===0) line.setAttribute('class','base');
+    gridG.appendChild(line);
+    gridG.appendChild(txt('text', {'class':'lc-ylabel', x:PAD.l-4, y:y+4}, v===0?'0':(v==='5'?'5人':v+(v===5?'人':''))));
+  });
+  svg.appendChild(gridG);
+
+  // X 軸標籤（每4小時）
+  var xG = el('g', {});
+  [0,6,12,18,23].forEach(function(i){
+    var label = i===0?'午夜':i===6?'06:00':i===12?'正午':i===18?'18:00':i===23?'23:00':'';
+    xG.appendChild(txt('text', {'class':'lc-xlabel', x:cx(i), y:H-4}, label));
+  });
+  svg.appendChild(xG);
+
+  // 夜間背景帶（18-24 和 0-6）
+  var nightBg = el('g',{});
+  // 18→23
+  var nx1=cx(18), nx2=cx(23)+(cw/23)*0.5;
+  nightBg.appendChild(el('rect',{x:nx1,y:PAD.t,width:nx2-nx1,height:ch,fill:'rgba(255,77,109,0.06)',rx:'3'}));
+  // 0→5
+  var nx3=PAD.l, nx4=cx(5)+(cw/23)*0.5;
+  nightBg.appendChild(el('rect',{x:nx3,y:PAD.t,width:nx4-nx3,height:ch,fill:'rgba(255,77,109,0.06)',rx:'3'}));
+  svg.insertBefore(nightBg, svg.firstChild);
+
+  // 面積填充路徑
+  var areaPoints = DATA.map(function(v,i){ return cx(i)+','+cy(v); }).join(' ');
+  var areaPath = 'M'+cx(0)+','+cy(0)+' '+
+    DATA.map(function(v,i){ return 'L'+cx(i)+','+cy(v); }).join(' ')+
+    ' L'+cx(23)+','+cy(DATA[23])+
+    ' L'+cx(23)+','+(PAD.t+ch)+
+    ' L'+PAD.l+','+(PAD.t+ch)+' Z';
+  svg.appendChild(el('path',{'class':'lc-area', d:areaPath}));
+
+  // 折線路徑
+  var linePath = 'M'+DATA.map(function(v,i){ return cx(i)+','+cy(v); }).join(' L');
+  svg.appendChild(el('path',{'class':'lc-line', d:linePath}));
+
+  // tooltip group
+  var tip = el('g', {'class':'lc-tooltip', visibility:'hidden'});
+  var tipRect = el('rect', {x:0,y:0,width:72,height:32,rx:6,fill:'#2a2a40',stroke:'rgba(255,255,255,0.15)','stroke-width':'1'});
+  var tipText = txt('text', {x:36,y:14,'text-anchor':'middle',fill:'#eeeef5','font-size':'11','font-family':'Inter,sans-serif','font-weight':'600'}, '');
+  var tipSub  = txt('text', {x:36,y:26,'text-anchor':'middle',fill:'rgba(238,238,245,0.5)','font-size':'10','font-family':'Inter,sans-serif'}, '');
+  tip.appendChild(tipRect); tip.appendChild(tipText); tip.appendChild(tipSub);
+  svg.appendChild(tip);
+
+  // 數據點
+  var dotsG = el('g',{});
+  DATA.forEach(function(v,i){
+    var isHi = v===MAX;
+    var isZero = v===0;
+    var c = el('circle', {
+      cx: cx(i), cy: cy(v), r: isHi?5:3.5,
+      'class': 'lc-dot'+(isZero?' zero':'')+(isHi?' hi':''),
+      fill: isZero?'#3a3a52':'#ff4d6d',
+      stroke: '#1e1e2e', 'stroke-width':'2'
+    });
+    c.addEventListener('mouseenter', function(){
+      var tx = cx(i), ty = cy(v);
+      var tw = 72, th = 32;
+      var ox = Math.min(Math.max(tx - tw/2, PAD.l), W-PAD.r-tw);
+      var oy = ty - th - 10;
+      if(oy < 0) oy = ty + 10;
+      tipRect.setAttribute('x', ox); tipRect.setAttribute('y', oy);
+      tipRect.setAttribute('width', tw); tipRect.setAttribute('height', th);
+      tipText.setAttribute('x', ox+tw/2); tipText.setAttribute('y', oy+14);
+      tipText.textContent = v + ' 人';
+      tipSub.setAttribute('x', ox+tw/2); tipSub.setAttribute('y', oy+26);
+      tipSub.textContent = i+':00–'+i+':59';
+      tip.setAttribute('visibility','visible');
+      c.setAttribute('r', '6');
+    });
+    c.addEventListener('mouseleave', function(){
+      tip.setAttribute('visibility','hidden');
+      c.setAttribute('r', isHi?'5':'3.5');
+    });
+    dotsG.appendChild(c);
+  });
+  svg.appendChild(dotsG);
+  svg.appendChild(tip); // 置頂
+})();
+</script>
+<script>
 (function(){
   /* ── 1. 初始化地圖 ── */
   var map = L.map('trail-map', {
@@ -402,7 +561,7 @@ footer a:hover{color:#e94560}
   var ORDER = ['麦理浩径','卫奕信径','港岛径','大屿山径'];
   var LABELS_TC = {'麦理浩径':'麥理浩徑','卫奕信径':'衛奕信徑','港岛径':'港島徑','大屿山径':'大嶼山徑'};
 
-  /* ── 3. 建立各徑的 Polyline 圖層（先不加入地圖）── */
+  /* ── 3. 建立各徑的 Polyline 圖層（預先加入地圖，opacity=0）── */
   var trailPolylines = {};   // trail -> L.featureGroup
 
   ORDER.forEach(function(key){
@@ -413,11 +572,12 @@ footer a:hover{color:#e94560}
       return L.polyline(latlngs, {
         color: d.color,
         weight: d.weight,
-        opacity: 0,            // 預設透明
+        opacity: 0,            // 預設透明，但已加入地圖完成渲染
         smoothFactor: 1.2
       });
     });
     var fg = L.featureGroup(lines);
+    fg.addTo(map);             // ← 預先加入，消除首次顯示的渲染延遲
 
     /* tooltip */
     lines.forEach(function(ln){
@@ -440,7 +600,7 @@ footer a:hover{color:#e94560}
   /* ── 4. 緩入動畫（opacity 0→target，easeOutCubic）── */
   function easeOut(t){ return 1 - Math.pow(1-t, 3); }
   function fadeIn(fg, targetOpacity, done){
-    fg.addTo(map);
+    /* 路線已預先加入地圖，只需做 opacity 動畫 */
     var layers = fg.getLayers();
     var start = performance.now();
     var dur = 1100;
@@ -464,13 +624,11 @@ footer a:hover{color:#e94560}
     currentStep = n;
 
     if(n === 0){
-      /* step0：清空地圖，縮回全港視角 */
+      /* step0：清空顯示（opacity 歸零），縮回全港視角 */
       ORDER.forEach(function(k){
         var fg = trailPolylines[k];
-        if(fg && map.hasLayer(fg)){
-          fg.getLayers().forEach(function(l){ l.setStyle({opacity:0}); });
-          setTimeout(function(){ if(!map.hasLayer(fg)) return; map.removeLayer(fg); }, 650);
-        }
+        if(!fg) return;
+        fg.getLayers().forEach(function(l){ l.setStyle({opacity:0}); });
       });
       revealedUpTo = -1;
       map.flyTo([22.35, 114.1], 10, {duration:1.4, easeLinearity:0.3});
@@ -488,20 +646,16 @@ footer a:hover{color:#e94560}
         if(!d) return;
         var fg  = trailPolylines[key];
         if(!fg) return;
-        if(!map.hasLayer(fg)){
-          fadeIn(fg, d.opacity);
-        } else {
-          fg.getLayers().forEach(function(l){ l.setStyle({opacity: d.opacity}); });
-        }
+        fadeIn(fg, d.opacity);
       })(i);
     }
     revealedUpTo = Math.max(revealedUpTo, targetIdx);
 
     /* 高亮當前賽段，其他已亮起的賽段降低透明度 */
     ORDER.forEach(function(k, idx){
-      if(idx > revealedUpTo) return;   // 尚未亮起，跳過
+      if(idx > revealedUpTo) return;
       var fg = trailPolylines[k];
-      if(!fg || !map.hasLayer(fg)) return;
+      if(!fg) return;
       var d = TRAIL_DATA[k];
       if(!d) return;
       var targetOp = (idx === targetIdx) ? d.opacity : d.opacity * 0.22;
