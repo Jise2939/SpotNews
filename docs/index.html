@@ -72,11 +72,51 @@ footer{background:#080810;text-align:center;padding:34px 24px;font-size:11px;col
 footer a{color:rgba(232,232,238,0.38);text-decoration:none}
 footer a:hover{color:#e94560}
 
+/* ── 退賽高峰圖表 ── */
+#peak-section{background:#0e0e14;padding:80px 0 60px}
+.peak-charts{max-width:1000px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.chart-card{background:#161622;border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:28px 24px}
+.chart-title{font-size:13px;font-weight:700;color:rgba(232,232,238,0.55);letter-spacing:1px;text-transform:uppercase;margin-bottom:22px}
+.chart-note{font-size:12px;color:rgba(232,232,238,0.38);line-height:1.7;margin-top:16px}
+
+/* 柱狀圖 */
+.bar-chart{display:flex;align-items:flex-end;gap:10px;height:180px;padding-bottom:0}
+.bar-group{display:flex;flex-direction:column;align-items:center;flex:1;gap:0}
+.bar-wrap{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.bar{width:100%;height:var(--h);background:var(--clr);border-radius:4px 4px 0 0;transition:opacity .2s;opacity:.85}
+.bar-group:hover .bar{opacity:1}
+.bar-group.highlight .bar{box-shadow:0 0 12px var(--clr)}
+.bar-label{font-size:11px;color:rgba(232,232,238,0.45);margin-top:7px;white-space:nowrap}
+.bar-val{font-size:12px;font-weight:700;color:rgba(232,232,238,0.7);margin-top:2px}
+.bar-group.highlight .bar-val{color:#8e44ad}
+
+/* 水平條狀圖 */
+.seg-chart{display:flex;flex-direction:column;gap:14px}
+.seg-row{display:flex;align-items:center;gap:10px}
+.seg-label{width:72px;font-size:11px;color:rgba(232,232,238,0.55);display:flex;align-items:center;gap:5px;flex-shrink:0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.seg-bar-wrap{flex:1;background:rgba(255,255,255,0.05);border-radius:4px;height:28px;position:relative;overflow:hidden}
+.seg-bar{height:100%;width:var(--w);background:var(--clr);border-radius:4px;display:flex;align-items:center;padding-left:8px;transition:width .6s ease;opacity:.85}
+.seg-row:hover .seg-bar{opacity:1}
+.seg-val{font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
+.seg-pct{width:50px;font-size:11px;color:rgba(232,232,238,0.45);text-align:right;flex-shrink:0}
+.highlight-row .seg-pct{color:#3498db;font-weight:700}
+
+/* mini breakdown */
+.mini-breakdown{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06)}
+.mb-title{font-size:11px;color:rgba(232,232,238,0.35);letter-spacing:0.5px;margin-bottom:12px}
+.mb-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.mb-label{width:60px;font-size:11px;color:rgba(232,232,238,0.5);flex-shrink:0}
+.mb-track{flex:1;background:rgba(255,255,255,0.06);border-radius:3px;height:10px;overflow:hidden}
+.mb-fill{height:100%;width:var(--w);border-radius:3px}
+.mb-num{width:80px;font-size:11px;color:rgba(232,232,238,0.45);text-align:right;flex-shrink:0}
+
 @media(max-width:768px){
   .sticky-map{position:relative;width:100%;height:50vh;float:none}
   .story-steps{margin-left:0}
   .step{padding:40px 24px}
   .method-grid{grid-template-columns:1fr}
+  .peak-charts{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -170,6 +210,120 @@ footer a:hover{color:#e94560}
     <iframe src="map_dnf.html" title="退賽選手GPS最後位置" allowfullscreen></iframe>
   </div>
   <div class="map-credit">GPS 數據：dottrack.asia · 路線：HK4TUC 官方 KML · 統計期間：2021–2026</div>
+</section>
+
+<!-- ── 退賽高峰圖表 ── -->
+<section id="peak-section">
+  <div class="sec-head">
+    <div class="sec-tag">數據圖表</div>
+    <h2>退賽高峰在哪裡？</h2>
+    <p>從年份與賽段兩個維度，看 50 次退賽的分佈規律。</p>
+  </div>
+
+  <div class="peak-charts">
+
+    <!-- 左：按年份 -->
+    <div class="chart-card">
+      <h3 class="chart-title">按年份：各屆退賽人數</h3>
+      <div class="bar-chart" id="chart-year">
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:63.6%;--clr:#e74c3c"></div></div>
+          <div class="bar-label">2021</div>
+          <div class="bar-val">7</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:81.8%;--clr:#e67e22"></div></div>
+          <div class="bar-label">2022</div>
+          <div class="bar-val">9</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:90.9%;--clr:#f39c12"></div></div>
+          <div class="bar-label">2023</div>
+          <div class="bar-val">10</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:81.8%;--clr:#27ae60"></div></div>
+          <div class="bar-label">2024</div>
+          <div class="bar-val">9</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:36.4%;--clr:#2980b9"></div></div>
+          <div class="bar-label">2025</div>
+          <div class="bar-val">4</div>
+        </div>
+        <div class="bar-group highlight">
+          <div class="bar-wrap"><div class="bar" style="--h:100%;--clr:#8e44ad"></div></div>
+          <div class="bar-label">2026</div>
+          <div class="bar-val">11 ▲</div>
+        </div>
+      </div>
+      <p class="chart-note">2026 年退賽人數創六年新高（11 人），2025 年最低（4 人）。</p>
+    </div>
+
+    <!-- 右：按赛段 -->
+    <div class="chart-card">
+      <h3 class="chart-title">按賽段：各段退賽人數</h3>
+      <div class="seg-chart">
+        <div class="seg-row">
+          <div class="seg-label"><span class="dot" style="background:#e74c3c"></span>麥理浩徑</div>
+          <div class="seg-bar-wrap">
+            <div class="seg-bar" style="--w:26%;--clr:#e74c3c">
+              <span class="seg-val">13</span>
+            </div>
+          </div>
+          <div class="seg-pct">26%</div>
+        </div>
+        <div class="seg-row highlight-row">
+          <div class="seg-label"><span class="dot" style="background:#3498db"></span>衛奕信徑</div>
+          <div class="seg-bar-wrap">
+            <div class="seg-bar" style="--w:48%;--clr:#3498db">
+              <span class="seg-val">24</span>
+            </div>
+          </div>
+          <div class="seg-pct">48% ▲</div>
+        </div>
+        <div class="seg-row">
+          <div class="seg-label"><span class="dot" style="background:#27ae60"></span>港島徑</div>
+          <div class="seg-bar-wrap">
+            <div class="seg-bar" style="--w:22%;--clr:#27ae60">
+              <span class="seg-val">11</span>
+            </div>
+          </div>
+          <div class="seg-pct">22%</div>
+        </div>
+        <div class="seg-row">
+          <div class="seg-label"><span class="dot" style="background:#f39c12"></span>大嶼山徑</div>
+          <div class="seg-bar-wrap">
+            <div class="seg-bar" style="--w:4%;--clr:#f39c12">
+              <span class="seg-val">2</span>
+            </div>
+          </div>
+          <div class="seg-pct">4%</div>
+        </div>
+      </div>
+      <p class="chart-note">衛奕信徑是退賽重災區，幾乎一半退賽發生在此——積累疲勞在 178km 前後爆發。</p>
+
+      <!-- 途中 vs 完成後 mini breakdown -->
+      <div class="mini-breakdown">
+        <div class="mb-title">途中退賽 vs. 完成後轉場退賽</div>
+        <div class="mb-row">
+          <span class="mb-label">途中退賽</span>
+          <div class="mb-track">
+            <div class="mb-fill" style="--w:74%;background:#e94560"></div>
+          </div>
+          <span class="mb-num">37 人 (74%)</span>
+        </div>
+        <div class="mb-row">
+          <span class="mb-label">轉場後退</span>
+          <div class="mb-track">
+            <div class="mb-fill" style="--w:26%;background:rgba(232,232,238,0.25)"></div>
+          </div>
+          <span class="mb-num">13 人 (26%)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <section id="method">
