@@ -8,16 +8,16 @@ __pycache__/
 .DS_Store
 
 # 原始爬取数据（可由脚本重新生成）
-hk4tuc_all_years/raw/
+data/raw/
 hk4tuc_2026_data/
 
 # Flourish 导出（临时产物）
-hk4tuc_all_years/flourish_dnf_map.csv
+data/flourish_dnf_map.csv
 
 # 旧版输出（docs/ 已有副本）
-hk4tuc_all_years/HK4TUC_DNF_Map_v2.html
-hk4tuc_all_years/HK4TUC_Trail_DNF_Map.html
-hk4tuc_all_years/charts/
+data/HK4TUC_DNF_Map_v2.html
+data/HK4TUC_Trail_DNF_Map.html
+data/charts/
 
 # Excel（CSV 已足够）
-hk4tuc_all_years/HK4TUC_All_Years.xlsx
+data/HK4TUC_All_Years.xlsx
