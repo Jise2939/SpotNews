@@ -33,7 +33,7 @@ body{font-family:'Inter',sans-serif;background:#0e0e14;color:#e8e8ee;overflow-x:
 .leaflet-container{background:#111118!important}
 .trail-tooltip{background:rgba(14,14,20,0.9);border:1px solid rgba(255,255,255,0.12);color:#e8e8ee;font-size:12px;padding:6px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.4);line-height:1.6;pointer-events:none}
 .trail-tooltip b{font-weight:700}
-.story-steps{margin-left:55%;padding:0 0 25vh 0}
+.story-steps{margin-left:55%;padding:0 0 120vh 0;background:#0e0e14}
 .step{min-height:90vh;display:flex;align-items:center;padding:60px 48px 60px 44px}
 .step-inner{max-width:400px}
 .step-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-size:13px;font-weight:700;margin-bottom:14px}
@@ -373,10 +373,13 @@ footer a:hover{color:#e94560}
   var obs = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){
-        setStep(parseInt(e.target.dataset.step, 10));
+        var n = parseInt(e.target.dataset.step, 10);
+        /* step0（清空地圖）只在向上捲回時觸發，避免 step4 底部觸發清空 */
+        if(n === 0 && currentStep > 0) setStep(0);
+        else if(n > 0) setStep(n);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.45, rootMargin: '-15% 0px -15% 0px' });
 
   steps.forEach(function(el){ obs.observe(el); });
 
