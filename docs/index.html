@@ -1,387 +1,371 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>香港四徑超級挑戰賽 退賽數據分析 2021–2026</title>
-  <meta name="description" content="香港四徑超級挑戰賽（HK4TUC）2021至2026年退賽數據深度分析，包含退賽地點地圖及各賽段退賽統計。" />
-  <style>
-    /* ── Reset & Base ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
-                   "Helvetica Neue", Arial, sans-serif;
-      background: #f8f9fa;
-      color: #1a1a2e;
-      line-height: 1.7;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>誰在哪裡放棄？— HK4TUC 退賽深度分析 2021–2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#0e0e14;color:#e8e8ee;overflow-x:hidden}
 
-    /* ── Header ── */
-    header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
-      color: white;
-      padding: 60px 24px 48px;
-      text-align: center;
-    }
-    .header-tag {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
-      color: #a8d8ea;
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 16px;
-    }
-    header h1 {
-      font-size: clamp(24px, 5vw, 42px);
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 16px;
-      letter-spacing: -0.5px;
-    }
-    header h1 span { color: #e94560; }
-    header p.subtitle {
-      font-size: clamp(14px, 2vw, 18px);
-      color: rgba(255,255,255,0.75);
-      max-width: 620px;
-      margin: 0 auto 32px;
-    }
-    .header-stats {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-    .stat-item { text-align: center; }
-    .stat-num {
-      display: block;
-      font-size: 36px;
-      font-weight: 800;
-      color: #e94560;
-      line-height: 1;
-    }
-    .stat-label {
-      display: block;
-      font-size: 12px;
-      color: rgba(255,255,255,0.6);
-      margin-top: 4px;
-      letter-spacing: 1px;
-    }
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 24px;background:linear-gradient(160deg,#0e0e14 0%,#161628 60%,#1a1040 100%);position:relative}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 70%,rgba(233,69,96,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-tag{display:inline-block;border:1px solid rgba(233,69,96,0.4);color:#e94560;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:28px}
+#hero h1{font-size:clamp(32px,6vw,64px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:800px}
+#hero h1 em{font-style:normal;color:#e94560}
+#hero p.lead{font-size:clamp(15px,2vw,18px);color:rgba(232,232,238,0.65);max-width:540px;line-height:1.7;margin-bottom:48px}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;margin-bottom:60px}
+.hs-num{display:block;font-size:clamp(36px,5vw,52px);font-weight:800;color:#e94560;line-height:1}
+.hs-label{display:block;font-size:12px;color:rgba(232,232,238,0.4);letter-spacing:1px;margin-top:5px;text-align:center}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(232,232,238,0.25);font-size:12px;letter-spacing:1px;animation:bounce 2s ease-in-out infinite}
+.scroll-hint svg{width:18px;height:18px;stroke:currentColor;fill:none}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 
-    /* ── Nav ── */
-    nav {
-      background: white;
-      border-bottom: 1px solid #e9ecef;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 0 24px;
-    }
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 0;
-      max-width: 900px;
-      margin: 0 auto;
-      overflow-x: auto;
-    }
-    nav a {
-      display: block;
-      padding: 14px 20px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #666;
-      text-decoration: none;
-      white-space: nowrap;
-      border-bottom: 3px solid transparent;
-      transition: color .2s, border-color .2s;
-    }
-    nav a:hover, nav a.active {
-      color: #e94560;
-      border-bottom-color: #e94560;
-    }
+#story{position:relative;background:#0e0e14}
+.sticky-map{position:sticky;top:0;height:100vh;width:55%;float:left;overflow:hidden}
+#trail-map{width:100%;height:100%}
+/* Leaflet 覆蓋 */
+.leaflet-container{background:#111118!important}
+.trail-tooltip{background:rgba(14,14,20,0.9);border:1px solid rgba(255,255,255,0.12);color:#e8e8ee;font-size:12px;padding:6px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.4);line-height:1.6;pointer-events:none}
+.trail-tooltip b{font-weight:700}
+.story-steps{margin-left:55%;padding:0 0 25vh 0}
+.step{min-height:90vh;display:flex;align-items:center;padding:60px 48px 60px 44px}
+.step-inner{max-width:400px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-size:13px;font-weight:700;margin-bottom:14px}
+.step-inner h2{font-size:clamp(19px,2.4vw,26px);font-weight:800;line-height:1.2;margin-bottom:12px}
+.step-inner p{font-size:14px;color:rgba(232,232,238,0.62);line-height:1.8;margin-bottom:9px}
+.stat-pill{display:inline-block;padding:2px 9px;border-radius:11px;font-size:12px;font-weight:700;margin:3px 2px}
+.step-div{border:none;border-top:1px solid rgba(255,255,255,0.06);margin:14px 0}
+.c-mac{color:#e74c3c}.c-wil{color:#3498db}.c-hk{color:#27ae60}.c-lau{color:#f39c12}
+.bg-mac{background:rgba(231,76,60,0.14);color:#e74c3c}
+.bg-wil{background:rgba(52,152,219,0.14);color:#3498db}
+.bg-hk{background:rgba(39,174,96,0.14);color:#27ae60}
+.bg-lau{background:rgba(243,156,18,0.14);color:#f39c12}
 
-    /* ── Main ── */
-    main { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+#gps-section{clear:both;background:#111118;padding:80px 0 0}
+.sec-head{max-width:680px;margin:0 auto 28px;padding:0 32px;text-align:center}
+.sec-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#e94560;margin-bottom:10px}
+.sec-head h2{font-size:clamp(20px,3vw,32px);font-weight:800;margin-bottom:12px}
+.sec-head p{font-size:14px;color:rgba(232,232,238,0.55);line-height:1.75}
+.note-bar{max-width:680px;margin:0 auto 16px;padding:0 32px}
+.note-bar p{background:rgba(255,193,7,0.07);border-left:3px solid rgba(255,193,7,0.35);padding:9px 13px;font-size:13px;color:rgba(232,232,238,0.45);border-radius:0 6px 6px 0;line-height:1.6}
+.full-map{width:100%;height:70vh;min-height:460px}
+.full-map iframe{width:100%;height:100%;border:none;display:block}
+.map-credit{background:#0a0a10;text-align:center;padding:13px;font-size:11px;color:rgba(232,232,238,0.2);letter-spacing:0.5px}
 
-    /* ── Section ── */
-    section { margin-top: 56px; }
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #e94560;
-      margin-bottom: 8px;
-    }
-    section h2 {
-      font-size: clamp(20px, 3vw, 28px);
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: #1a1a2e;
-    }
-    section p {
-      color: #555;
-      font-size: 15px;
-      margin-bottom: 8px;
-      max-width: 720px;
-    }
-    .note {
-      background: #fff8e1;
-      border-left: 4px solid #ffc107;
-      padding: 10px 14px;
-      font-size: 13px;
-      color: #795548;
-      border-radius: 0 6px 6px 0;
-      margin: 12px 0 20px;
-      max-width: 720px;
-    }
+#method{background:#0e0e14;padding:80px 32px}
+.method-inner{max-width:660px;margin:0 auto}
+.method-inner>h2{font-size:22px;font-weight:800;margin-bottom:24px}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.mc{background:#161622;border:1px solid rgba(255,255,255,0.05);border-radius:10px;padding:18px}
+.mc h3{font-size:11px;font-weight:700;color:#e94560;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px}
+.mc ul{list-style:none;padding:0}
+.mc li{font-size:12px;color:rgba(232,232,238,0.5);line-height:1.9;padding-left:12px;position:relative}
+.mc li::before{content:'·';position:absolute;left:0;color:#e94560}
 
-    /* ── Map Frame ── */
-    .map-wrap {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-      margin-top: 20px;
-      border: 1px solid #e9ecef;
-      background: #eee;
-    }
-    .map-wrap iframe {
-      width: 100%;
-      height: 560px;
-      border: none;
-      display: block;
-    }
-    .map-caption {
-      background: white;
-      padding: 10px 16px;
-      font-size: 12px;
-      color: #888;
-      border-top: 1px solid #eee;
-    }
+footer{background:#080810;text-align:center;padding:34px 24px;font-size:11px;color:rgba(232,232,238,0.22);letter-spacing:0.5px}
+footer a{color:rgba(232,232,238,0.38);text-decoration:none}
+footer a:hover{color:#e94560}
 
-    /* ── Key findings ── */
-    .findings {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin: 24px 0;
-    }
-    .finding-card {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      border: 1px solid #e9ecef;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-    .finding-card .num {
-      font-size: 32px;
-      font-weight: 800;
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .finding-card .label {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.4;
-    }
-
-    /* ── Methodology ── */
-    .method-box {
-      background: white;
-      border-radius: 10px;
-      padding: 24px;
-      border: 1px solid #e9ecef;
-      margin-top: 20px;
-      font-size: 14px;
-      color: #555;
-    }
-    .method-box h3 {
-      font-size: 16px;
-      font-weight: 700;
-      color: #1a1a2e;
-      margin-bottom: 12px;
-    }
-    .method-box ul {
-      padding-left: 20px;
-      line-height: 2;
-    }
-
-    /* ── Footer ── */
-    footer {
-      background: #1a1a2e;
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      padding: 32px 24px;
-      font-size: 13px;
-      margin-top: 80px;
-    }
-    footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
-    footer a:hover { color: white; }
-
-    @media (max-width: 600px) {
-      .header-stats { gap: 20px; }
-      .map-wrap iframe { height: 420px; }
-    }
-  </style>
+@media(max-width:768px){
+  .sticky-map{position:relative;width:100%;height:50vh;float:none}
+  .story-steps{margin-left:0}
+  .step{padding:40px 24px}
+  .method-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-<!-- ── HEADER ── -->
-<header>
-  <div class="header-tag">數據新聞 · Data Journalism</div>
-  <h1>香港四徑超級挑戰賽<br><span>退賽數據深度分析</span></h1>
-  <p class="subtitle">
-    2021 至 2026 年間，50 名選手在賽事中途退賽——他們在哪裡停下來，為什麼？
-  </p>
-  <div class="header-stats">
-    <div class="stat-item">
-      <span class="stat-num">6</span>
-      <span class="stat-label">屆賽事</span>
+<section id="hero">
+  <div class="hero-tag">數據新聞 · HK4TUC 2021–2026</div>
+  <h1>誰在哪裡<em>放棄</em>了？</h1>
+  <p class="lead">六年間 119 名選手挑戰香港四條法定遠足徑，全程 298km、逾 2 萬米累計爬升。其中 50 人未能走完——數據告訴我們，他們倒在哪裡。</p>
+  <div class="hero-stats">
+    <div><span class="hs-num">6</span><span class="hs-label">屆賽事</span></div>
+    <div><span class="hs-num">119</span><span class="hs-label">參賽人次</span></div>
+    <div><span class="hs-num">50</span><span class="hs-label">退賽人次</span></div>
+    <div><span class="hs-num">42%</span><span class="hs-label">平均退賽率</span></div>
+  </div>
+  <div class="scroll-hint">
+    <span>向下滾動</span>
+    <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<div id="story">
+  <div class="sticky-map">
+    <div id="trail-map"></div>
+  </div>
+  <div class="story-steps">
+
+    <div class="step" data-step="0">
+      <div class="step-inner">
+        <div class="step-num" style="background:rgba(255,255,255,0.07);color:#777">●</div>
+        <h2>四條徑，一個不停歇的挑戰</h2>
+        <p>HK4TUC 要求選手依序完成全港四條法定遠足徑，四條徑之間以交通工具轉場，全程無關門時間。</p>
+        <p>左側地圖呈現四條徑的官方賽道。<strong>繼續向下滾動，各賽段將依序亮起。</strong></p>
+        <hr class="step-div"/>
+        <p style="font-size:12px;color:rgba(232,232,238,0.3)">賽程：麥理浩徑 → 衛奕信徑 → 港島徑 → 大嶼山徑</p>
+      </div>
     </div>
-    <div class="stat-item">
-      <span class="stat-num">119</span>
-      <span class="stat-label">參賽總人次</span>
+
+    <div class="step" data-step="1">
+      <div class="step-inner">
+        <div class="step-num bg-mac">1</div>
+        <h2><span class="c-mac">第一段：麥理浩徑</span><br/>100km，13 人退賽</h2>
+        <p>從西貢出發，橫越香港北部山脊至屯門。這是四徑中最長的一段，但退賽人數並非最多。</p>
+        <p>13 名退賽者中，<span class="stat-pill bg-mac">途中 8 人</span>在賽道上停下，另有 <span class="stat-pill bg-mac">完成後 5 人</span>跑完 100km 後才在轉場期間決定放棄。</p>
+      </div>
     </div>
-    <div class="stat-item">
-      <span class="stat-num">50</span>
-      <span class="stat-label">退賽人次</span>
+
+    <div class="step" data-step="2">
+      <div class="step-inner">
+        <div class="step-num bg-wil">2</div>
+        <h2><span class="c-wil">第二段：衛奕信徑</span><br/>78km，24 人退賽</h2>
+        <p>從屯門穿越新界中部至香港仔。退賽人數最多的一段，佔所有退賽的 <strong>48%</strong>。</p>
+        <p><span class="stat-pill bg-wil">途中 19 人</span>在這段放棄，<span class="stat-pill bg-wil">完成後 5 人</span>在轉場時退出。逾百公里的積累，在衛奕信徑的山路上全面爆發。</p>
+      </div>
     </div>
-    <div class="stat-item">
-      <span class="stat-num">42%</span>
-      <span class="stat-label">平均退賽率</span>
+
+    <div class="step" data-step="3">
+      <div class="step-inner">
+        <div class="step-num bg-hk">3</div>
+        <h2><span class="c-hk">第三段：港島徑</span><br/>50km，11 人退賽</h2>
+        <p>從薄扶林沿港島南岸山脊至柴灣。走到這裡的選手已完成逾 178km。</p>
+        <p><span class="stat-pill bg-hk">途中 10 人</span>在港島徑停步，<span class="stat-pill bg-hk">完成後 1 人</span>在轉場時退賽。</p>
+      </div>
+    </div>
+
+    <div class="step" data-step="4">
+      <div class="step-inner">
+        <div class="step-num bg-lau">4</div>
+        <h2><span class="c-lau">第四段：大嶼山徑</span><br/>70km，僅 2 人退賽</h2>
+        <p>最後一段，橫越大嶼山至梅窩。走到這裡已跑逾 228km。</p>
+        <p>六年間只有 <span class="stat-pill bg-lau">2 人</span>在大嶼山徑途中退賽——在終點近在眼前之際放棄，需要多大的理由？</p>
+        <hr class="step-div"/>
+        <p style="font-size:12px;color:rgba(232,232,238,0.3)">可直接點擊地圖上的路線和氣泡查看詳細數據。</p>
+      </div>
+    </div>
+
+  </div>
+  <div style="clear:both"></div>
+</div>
+
+<section id="gps-section">
+  <div class="sec-head">
+    <div class="sec-tag">地圖二</div>
+    <h2>他們的 GPS 追蹤器，最後停在哪裡？</h2>
+    <p>每個圓點代表一名退賽選手的 GPS 最後記錄位置，按年份以顏色區分。點擊圓點可查看選手資訊。</p>
+  </div>
+  <div class="note-bar">
+    <p>⚠️ GPS 最後位置並非精確退賽地點——部分追蹤器在轉場期間仍在運作，最後記錄位置可能為集合點或交通途中。</p>
+  </div>
+  <div class="full-map">
+    <iframe src="map_dnf.html" title="退賽選手GPS最後位置" allowfullscreen></iframe>
+  </div>
+  <div class="map-credit">GPS 數據：dottrack.asia · 路線：HK4TUC 官方 KML · 統計期間：2021–2026</div>
+</section>
+
+<section id="method">
+  <div class="method-inner">
+    <h2>數據說明</h2>
+    <div class="method-grid">
+      <div class="mc">
+        <h3>數據來源</h3>
+        <ul>
+          <li>成績及 CP 打卡：dottrack.asia 官方 API</li>
+          <li>GPS 追蹤：選手 KML 記錄</li>
+          <li>官方賽道：HK4TUC KML（22hk4tuc）</li>
+          <li>覆蓋：2021–2026 共 119 人次</li>
+        </ul>
+      </div>
+      <div class="mc">
+        <h3>退賽位置判斷</h3>
+        <ul>
+          <li>依最後打卡的官方 CP 判斷所在段</li>
+          <li>途中退賽 = 打卡入段後未到下一 CP</li>
+          <li>完成後退賽 = 完成該段後在轉場放棄</li>
+          <li>8 人有 GPS 但無 CP，歸入麥理浩徑途中</li>
+        </ul>
+      </div>
+      <div class="mc">
+        <h3>數據局限</h3>
+        <ul>
+          <li>GPS 最後位置含轉場移動誤差</li>
+          <li>未區分主動退賽與強制退賽</li>
+          <li>轉場期間退賽不計入任何賽段統計</li>
+        </ul>
+      </div>
+      <div class="mc">
+        <h3>關於 HK4TUC</h3>
+        <ul>
+          <li>全程約 298km，累計爬升逾 2 萬米</li>
+          <li>四條徑之間以交通工具轉場</li>
+          <li>無關門時間，選手自主判斷退賽</li>
+          <li>數據截至 2026 年 3 月</li>
+        </ul>
+      </div>
     </div>
   </div>
-</header>
+</section>
 
-<!-- ── NAV ── -->
-<nav>
-  <ul>
-    <li><a href="#overview">賽事概覽</a></li>
-    <li><a href="#trail-map">各徑退賽統計</a></li>
-    <li><a href="#dnf-map">退賽地點地圖</a></li>
-    <li><a href="#methodology">數據說明</a></li>
-  </ul>
-</nav>
-
-<main>
-
-  <!-- ── SECTION 1: Overview ── -->
-  <section id="overview">
-    <div class="section-label">賽事背景</div>
-    <h2>挑戰香港全部四條法定遠足徑</h2>
-    <p>
-      香港四徑超級挑戰賽（HK4TUC）要求選手連續完成麥理浩徑（100km）、
-      衛奕信徑（78km）、港島徑（50km）及大嶼山徑（70km），全程約 298km，
-      累計爬升逾 2 萬米，是香港最艱難的戶外賽事之一。四條徑之間需乘交通工具轉場。
-    </p>
-    <p>
-      本分析收集了 2021 至 2026 年六屆賽事的官方成績及 GPS 追蹤數據，
-      記錄了 50 名退賽選手的最後打卡檢查點，以了解選手在哪個賽段最易棄賽。
-    </p>
-
-    <div class="findings">
-      <div class="finding-card">
-        <div class="num" style="color:#3498db">24</div>
-        <div class="label">人在<strong>衛奕信徑</strong>退賽<br>佔退賽總數 48%</div>
-      </div>
-      <div class="finding-card">
-        <div class="num" style="color:#e74c3c">13</div>
-        <div class="label">人在<strong>麥理浩徑</strong>退賽<br>其中 5 人完成後才放棄</div>
-      </div>
-      <div class="finding-card">
-        <div class="num" style="color:#27ae60">11</div>
-        <div class="label">人在<strong>港島徑</strong>退賽<br>10 人於途中停止</div>
-      </div>
-      <div class="finding-card">
-        <div class="num" style="color:#f39c12">2</div>
-        <div class="label">人在<strong>大嶼山徑</strong>退賽<br>完成前三段的選手最頑強</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SECTION 2: Trail Map ── -->
-  <section id="trail-map">
-    <div class="section-label">地圖一</div>
-    <h2>各賽段退賽分佈</h2>
-    <p>
-      地圖以線條粗細及標注氣泡呈現各條徑的退賽熱度。
-      線條越粗代表在該賽段退賽的人數越多。氣泡內顯示合計人數，
-      並細分「途中退賽」與「完成後退賽」（即完成該段後在轉場期間放棄）。
-    </p>
-    <div class="note">
-      ⚠️ 此圖不顯示個人 GPS 座標，僅依官方檢查點打卡記錄統計，
-      避免因 GPS 漂移或轉場移動造成誤導。
-    </div>
-    <div class="map-wrap">
-      <iframe src="map_trails.html" title="各賽段退賽統計地圖"></iframe>
-      <div class="map-caption">
-        資料來源：dottrack.asia 官方成績 · 路線來源：HK4TUC 官方賽道 KML · 統計期間：2021–2026
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SECTION 3: DNF Map ── -->
-  <section id="dnf-map">
-    <div class="section-label">地圖二</div>
-    <h2>退賽選手 GPS 最後位置</h2>
-    <p>
-      每個圓點代表一名退賽選手的 GPS 追蹤器最後記錄位置，按年份以顏色區分。
-      點擊圓點可查看選手姓名、國籍、退賽時間及完整追蹤連結。
-    </p>
-    <div class="note">
-      ⚠️ GPS 最後位置並不等同於退賽地點——部分選手的追蹤器在轉場期間仍在運作，
-      最後記錄位置可能為集合點或交通途中，與實際退賽位置有偏差。
-    </div>
-    <div class="map-wrap">
-      <iframe src="map_dnf.html" title="退賽選手GPS最後位置地圖"></iframe>
-      <div class="map-caption">
-        GPS 數據來源：dottrack.asia 選手追蹤 · 路線來源：HK4TUC 官方賽道 KML · 統計期間：2021–2026
-      </div>
-    </div>
-  </section>
-
-  <!-- ── SECTION 4: Methodology ── -->
-  <section id="methodology">
-    <div class="section-label">數據說明</div>
-    <h2>方法論與數據局限</h2>
-    <div class="method-box">
-      <h3>數據來源</h3>
-      <ul>
-        <li>成績及檢查點數據：<a href="https://live.dottrack.asia" target="_blank">dottrack.asia</a> Open Tracking 平台官方 API</li>
-        <li>GPS 追蹤數據：dottrack.asia 選手個人 KML 追蹤記錄</li>
-        <li>官方賽道路線：HK4TUC 賽事方上傳之官方賽道 KML（22hk4tuc）</li>
-        <li>覆蓋年份：2021、2022、2023、2024、2025、2026</li>
-      </ul>
-      <h3 style="margin-top:16px">重要說明</h3>
-      <ul>
-        <li>「退賽位置」依據選手<strong>最後打卡的官方檢查點</strong>判斷，而非 GPS 座標</li>
-        <li>「<strong>途中退賽</strong>」= 打卡進入某段後，未能到達下一個檢查點</li>
-        <li>「<strong>完成後退賽</strong>」= 完成某段後，在轉場期間或下一段起點前放棄</li>
-        <li>四條徑之間的轉場段（乘坐巴士/的士）不計入任何賽段退賽統計</li>
-        <li>部分選手（8人）雖有 GPS 軌跡但無中間 CP 記錄，歸類為「麥理浩徑途中退賽」</li>
-        <li>官方成績以 <code>Retired</code> 統一標記，本分析未區分主動退賽與強制退賽</li>
-      </ul>
-    </div>
-  </section>
-
-</main>
-
-<!-- ── FOOTER ── -->
 <footer>
-  <p>
-    數據收集 &amp; 可視化：Spotnews ·
-    數據來源：<a href="https://live.dottrack.asia" target="_blank">dottrack.asia</a> ·
-    賽道路線：HK4TUC 官方
-  </p>
-  <p style="margin-top:8px">
-    本頁面依 <a href="https://pages.github.com" target="_blank">GitHub Pages</a> 發佈 ·
-    數據截至 2026 年 3 月
-  </p>
+  <p>數據收集 &amp; 可視化：<strong style="color:rgba(232,232,238,0.38)">Spotnews</strong> · 數據來源：<a href="https://live.dottrack.asia" target="_blank">dottrack.asia</a> · 賽道路線：HK4TUC 官方</p>
 </footer>
 
+<script src="route_data.js"></script>
+<script>
+(function(){
+  /* ── 1. 初始化地圖 ── */
+  var map = L.map('trail-map', {
+    center: [22.35, 114.1],
+    zoom: 10,
+    zoomControl: true,
+    attributionControl: false
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19, subdomains: 'abcd'
+  }).addTo(map);
+
+  L.control.attribution({prefix: false})
+    .addAttribution('© <a href="https://carto.com">CARTO</a>')
+    .addTo(map);
+
+  /* ── 2. 按順序整理賽段 ── */
+  var ORDER = ['麦理浩径','卫奕信径','港岛径','大屿山径'];
+  var LABELS_TC = {'麦理浩径':'麥理浩徑','卫奕信径':'衛奕信徑','港岛径':'港島徑','大屿山径':'大嶼山徑'};
+
+  /* ── 3. 建立各徑的 Polyline 圖層（先不加入地圖）── */
+  var trailPolylines = {};   // trail -> L.featureGroup
+
+  ORDER.forEach(function(key){
+    var d = TRAIL_DATA[key];
+    if(!d) return;
+    var lines = d.segments.map(function(seg){
+      var latlngs = seg.map(function(p){ return [p[0], p[1]]; });
+      return L.polyline(latlngs, {
+        color: d.color,
+        weight: d.weight,
+        opacity: 0,            // 預設透明
+        smoothFactor: 1.2
+      });
+    });
+    var fg = L.featureGroup(lines);
+
+    /* tooltip */
+    lines.forEach(function(ln){
+      ln.on('mouseover', function(e){
+        var lbl = LABELS_TC[key]||key;
+        var tip = '<b style="color:'+d.color+'">'+lbl+'</b><br/>'
+          +'全段 '+d.km+'km &nbsp;｜&nbsp; '
+          +'退賽 <b>'+d.dnf+'</b> 人<br/>'
+          +'途中 '+d.mid+' 人 ｜ 完成後 '+d.aft+' 人';
+        ln.bindTooltip(tip,{
+          className:'trail-tooltip', sticky:true, direction:'top'
+        }).openTooltip(e.latlng);
+      });
+      ln.on('mouseout', function(){ ln.closeTooltip(); });
+    });
+
+    trailPolylines[key] = fg;
+  });
+
+  /* ── 4. 緩入動畫（opacity 0→target）── */
+  function fadeIn(fg, targetOpacity, done){
+    fg.addTo(map);
+    var layers = fg.getLayers();
+    var start = performance.now();
+    var dur = 600;
+    function tick(now){
+      var p = Math.min((now-start)/dur, 1);
+      var op = p * targetOpacity;
+      layers.forEach(function(l){ l.setStyle({opacity: op}); });
+      if(p < 1) requestAnimationFrame(tick);
+      else if(done) done();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ── 5. 按賽段數字控制圖層 ── */
+  var currentStep = -1;
+  var revealedUpTo = -1;   // 已亮起到哪一條
+
+  /* 各步驟顯示哪些路線（含前面所有已亮起的）*/
+  function setStep(n){
+    if(n === currentStep) return;
+    currentStep = n;
+
+    if(n === 0){
+      /* step0：清空地圖，縮回全港視角 */
+      ORDER.forEach(function(k){
+        var fg = trailPolylines[k];
+        if(fg && map.hasLayer(fg)){
+          fg.getLayers().forEach(function(l){ l.setStyle({opacity:0}); });
+          setTimeout(function(){ if(!map.hasLayer(fg)) return; map.removeLayer(fg); }, 650);
+        }
+      });
+      revealedUpTo = -1;
+      map.flyTo([22.35, 114.1], 10, {duration:1.2});
+      return;
+    }
+
+    /* step 1-4：按順序亮起第 n 條（0-indexed: step1→index0, step4→index3）*/
+    var targetIdx = n - 1;  // 0-based
+
+    /* 把還沒亮的從 0 到 targetIdx 依次亮起 */
+    for(var i = revealedUpTo+1; i <= targetIdx; i++){
+      (function(idx){
+        var key = ORDER[idx];
+        var d   = TRAIL_DATA[key];
+        if(!d) return;
+        var fg  = trailPolylines[key];
+        if(!fg) return;
+        /* 若已在地圖上（從後往前滾回來的情況），直接確認 opacity */
+        if(!map.hasLayer(fg)){
+          fadeIn(fg, d.opacity);
+        } else {
+          fg.getLayers().forEach(function(l){ l.setStyle({opacity: d.opacity}); });
+        }
+      })(i);
+    }
+    revealedUpTo = Math.max(revealedUpTo, targetIdx);
+
+    /* 飛到當前賽段 */
+    var key = ORDER[targetIdx];
+    var d   = TRAIL_DATA[key];
+    if(d && d.midpoint){
+      /* 取賽段bbox做fitBounds */
+      var allPts = [];
+      d.segments.forEach(function(seg){ seg.forEach(function(p){ allPts.push([p[0],p[1]]); }); });
+      if(allPts.length){
+        var bnds = L.latLngBounds(allPts);
+        map.flyToBounds(bnds, {padding:[60,60], maxZoom:12, duration:1.0});
+      }
+    }
+  }
+
+  /* ── 6. IntersectionObserver 監聽每個 step ── */
+  var steps = document.querySelectorAll('.step');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        setStep(parseInt(e.target.dataset.step, 10));
+      }
+    });
+  }, { threshold: 0.5 });
+
+  steps.forEach(function(el){ obs.observe(el); });
+
+  /* ── 7. 視窗 resize 修正 sticky ── */
+  window.addEventListener('resize', function(){ map.invalidateSize(); });
+})();
+</script>
 </body>
 </html>
