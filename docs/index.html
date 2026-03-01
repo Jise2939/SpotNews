@@ -227,7 +227,13 @@ footer a:hover{color:#e94560}
     center: [22.35, 114.1],
     zoom: 10,
     zoomControl: true,
-    attributionControl: false
+    attributionControl: false,
+    scrollWheelZoom: false,
+    dragging: false,
+    touchZoom: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false
   });
 
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -277,15 +283,16 @@ footer a:hover{color:#e94560}
     trailPolylines[key] = fg;
   });
 
-  /* ── 4. 緩入動畫（opacity 0→target）── */
+  /* ── 4. 緩入動畫（opacity 0→target，easeOutCubic）── */
+  function easeOut(t){ return 1 - Math.pow(1-t, 3); }
   function fadeIn(fg, targetOpacity, done){
     fg.addTo(map);
     var layers = fg.getLayers();
     var start = performance.now();
-    var dur = 600;
+    var dur = 1100;
     function tick(now){
       var p = Math.min((now-start)/dur, 1);
-      var op = p * targetOpacity;
+      var op = easeOut(p) * targetOpacity;
       layers.forEach(function(l){ l.setStyle({opacity: op}); });
       if(p < 1) requestAnimationFrame(tick);
       else if(done) done();
@@ -312,7 +319,7 @@ footer a:hover{color:#e94560}
         }
       });
       revealedUpTo = -1;
-      map.flyTo([22.35, 114.1], 10, {duration:1.2});
+      map.flyTo([22.35, 114.1], 10, {duration:1.4, easeLinearity:0.3});
       return;
     }
 
@@ -327,7 +334,6 @@ footer a:hover{color:#e94560}
         if(!d) return;
         var fg  = trailPolylines[key];
         if(!fg) return;
-        /* 若已在地圖上（從後往前滾回來的情況），直接確認 opacity */
         if(!map.hasLayer(fg)){
           fadeIn(fg, d.opacity);
         } else {
@@ -336,6 +342,17 @@ footer a:hover{color:#e94560}
       })(i);
     }
     revealedUpTo = Math.max(revealedUpTo, targetIdx);
+
+    /* 高亮當前賽段，其他已亮起的賽段降低透明度 */
+    ORDER.forEach(function(k, idx){
+      if(idx > revealedUpTo) return;   // 尚未亮起，跳過
+      var fg = trailPolylines[k];
+      if(!fg || !map.hasLayer(fg)) return;
+      var d = TRAIL_DATA[k];
+      if(!d) return;
+      var targetOp = (idx === targetIdx) ? d.opacity : d.opacity * 0.22;
+      fg.getLayers().forEach(function(l){ l.setStyle({opacity: targetOp}); });
+    });
 
     /* 飛到當前賽段 */
     var key = ORDER[targetIdx];
@@ -346,7 +363,7 @@ footer a:hover{color:#e94560}
       d.segments.forEach(function(seg){ seg.forEach(function(p){ allPts.push([p[0],p[1]]); }); });
       if(allPts.length){
         var bnds = L.latLngBounds(allPts);
-        map.flyToBounds(bnds, {padding:[60,60], maxZoom:12, duration:1.0});
+        map.flyToBounds(bnds, {padding:[80,80], maxZoom:13, duration:1.2, easeLinearity:0.25});
       }
     }
   }
