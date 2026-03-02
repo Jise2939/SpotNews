@@ -11,150 +11,338 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#13131f;color:#eeeef5;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:#0f0f0f;color:#f0f0f0;overflow-x:hidden}
 
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 24px;background:linear-gradient(160deg,#13131f 0%,#1a1a30 60%,#1e1248 100%);position:relative}
-#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 70%,rgba(233,69,96,0.13) 0%,transparent 70%);pointer-events:none}
-.hero-tag{display:inline-block;border:1px solid rgba(233,69,96,0.55);color:#ff6080;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:28px}
-#hero h1{font-size:clamp(32px,6vw,64px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:20px;max-width:800px}
-#hero h1 em{font-style:normal;color:#ff4d6d}
-#hero p.lead{font-size:clamp(15px,2vw,18px);color:rgba(238,238,245,0.72);max-width:540px;line-height:1.7;margin-bottom:48px}
-.hero-stats{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;margin-bottom:60px}
-.hs-num{display:block;font-size:clamp(36px,5vw,52px);font-weight:800;color:#ff4d6d;line-height:1}
-.hs-label{display:block;font-size:12px;color:rgba(238,238,245,0.45);letter-spacing:1px;margin-top:5px;text-align:center}
-.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(232,232,238,0.25);font-size:12px;letter-spacing:1px;animation:bounce 2s ease-in-out infinite}
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:80px 24px 60px;background:#0f0f0f;position:relative;overflow:hidden}
+.hero-kicker{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:20px}
+#hero h1{font-size:clamp(36px,6vw,72px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:18px;max-width:820px;color:#f0f0f0}
+#hero h1 em{font-style:normal;color:#ef4444}
+#hero p.lead{font-size:clamp(15px,1.8vw,17px);color:#b0b0b0;max-width:560px;line-height:1.75;margin-bottom:44px}
+.hero-divider{width:40px;height:3px;background:#ef4444;border-radius:2px;margin:0 auto 44px}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:480px;width:100%;border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;margin-bottom:52px;background:#1a1a1a}
+.hs-item{padding:22px 16px;border-right:1px solid rgba(255,255,255,0.08);position:relative}
+.hs-item:last-child{border-right:none}
+.hs-num{display:block;font-size:clamp(28px,4vw,40px);font-weight:800;color:#ef4444;line-height:1;letter-spacing:-1px}
+.hs-label{display:block;font-size:11px;color:#888;letter-spacing:0.5px;margin-top:6px}
+.hero-insights{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:680px;margin-bottom:52px}
+.insight-pill{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 16px;font-size:13px;color:#ccc;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.insight-pill strong{color:#f0f0f0;font-weight:700}
+.insight-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.scroll-hint{display:flex;flex-direction:column;align-items:center;gap:6px;color:#777;font-size:11px;letter-spacing:1px;animation:bounce 2s ease-in-out infinite}
 .scroll-hint svg{width:18px;height:18px;stroke:currentColor;fill:none}
-@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-#story{position:relative;background:#13131f}
-.sticky-map{position:sticky;top:0;height:100vh;width:55%;float:left;overflow:hidden}
+#story{position:relative;background:#0f0f0f;display:flex;align-items:flex-start}
+.sticky-map{position:sticky;top:0;height:100vh;width:55%;flex-shrink:0;overflow:hidden;background:#0f0f0f}
 #trail-map{width:100%;height:100%}
-/* Leaflet 覆蓋 */
-.leaflet-container{background:#111118!important}
-.trail-tooltip{background:rgba(18,18,28,0.95);border:1px solid rgba(255,255,255,0.18);color:#eeeef5;font-size:12px;padding:6px 10px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.5);line-height:1.6;pointer-events:none}
+.leaflet-container{background:#0f0f0f!important}
+.trail-tooltip{background:rgba(0,0,0,0.88);border:1px solid rgba(255,255,255,0.12);color:#f0f0f0;font-size:12px;padding:6px 10px;border-radius:6px;box-shadow:0 2px 12px rgba(0,0,0,0.4);line-height:1.6;pointer-events:none}
 .trail-tooltip b{font-weight:700}
-.story-steps{margin-left:55%;padding:0 0 120vh 0;background:#13131f}
+.story-steps{flex:1;padding:0 0 120vh 0;background:#0f0f0f}
 .step{min-height:90vh;display:flex;align-items:center;padding:60px 48px 60px 44px}
 .step-inner{max-width:400px}
 .step-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-size:13px;font-weight:700;margin-bottom:14px}
-.step-inner h2{font-size:clamp(19px,2.4vw,26px);font-weight:800;line-height:1.2;margin-bottom:12px;color:#eeeef5}
-.step-inner p{font-size:14px;color:rgba(238,238,245,0.68);line-height:1.8;margin-bottom:9px}
+.step-inner h2{font-size:clamp(19px,2.4vw,26px);font-weight:800;line-height:1.2;margin-bottom:12px;color:#f0f0f0}
+.step-inner p{font-size:14px;color:#b0b0b0;line-height:1.8;margin-bottom:9px}
 .stat-pill{display:inline-block;padding:2px 9px;border-radius:11px;font-size:12px;font-weight:700;margin:3px 2px}
 .step-div{border:none;border-top:1px solid rgba(255,255,255,0.08);margin:14px 0}
-.c-mac{color:#e74c3c}.c-wil{color:#3498db}.c-hk{color:#27ae60}.c-lau{color:#f39c12}
-.bg-mac{background:rgba(231,76,60,0.14);color:#e74c3c}
-.bg-wil{background:rgba(52,152,219,0.14);color:#3498db}
-.bg-hk{background:rgba(39,174,96,0.14);color:#27ae60}
-.bg-lau{background:rgba(243,156,18,0.14);color:#f39c12}
+.c-mac{color:#f87171}.c-wil{color:#60a5fa}.c-hk{color:#4ade80}.c-lau{color:#fbbf24}
+.bg-mac{background:rgba(239,68,68,0.15);color:#f87171}
+.bg-wil{background:rgba(96,165,250,0.15);color:#60a5fa}
+.bg-hk{background:rgba(74,222,128,0.15);color:#4ade80}
+.bg-lau{background:rgba(251,191,36,0.15);color:#fbbf24}
 
-#gps-section{clear:both;background:#1a1a28;padding:80px 0 0}
 .sec-head{max-width:680px;margin:0 auto 28px;padding:0 32px;text-align:center}
-.sec-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ff6080;margin-bottom:10px}
-.sec-head h2{font-size:clamp(20px,3vw,32px);font-weight:800;margin-bottom:12px;color:#eeeef5}
-.sec-head p{font-size:14px;color:rgba(238,238,245,0.6);line-height:1.75}
-.note-bar{max-width:680px;margin:0 auto 16px;padding:0 32px}
-.note-bar p{background:rgba(255,193,7,0.09);border-left:3px solid rgba(255,193,7,0.45);padding:9px 13px;font-size:13px;color:rgba(238,238,245,0.5);border-radius:0 6px 6px 0;line-height:1.6}
-.full-map{width:100%;height:88vh;min-height:600px}
-.full-map iframe{width:100%;height:100%;border:none;display:block}
-.map-credit{background:#0e0e18;text-align:center;padding:13px;font-size:11px;color:rgba(238,238,245,0.25);letter-spacing:0.5px}
+.sec-head h2{font-size:clamp(20px,3vw,32px);font-weight:800;margin-bottom:12px;color:#f0f0f0}
+.sec-head p{font-size:14px;color:#b0b0b0;line-height:1.75}
 
-#method{background:#13131f;padding:80px 32px}
+#method{background:#0f0f0f;padding:80px 32px}
 .method-inner{max-width:660px;margin:0 auto}
-.method-inner>h2{font-size:22px;font-weight:800;margin-bottom:24px}
+.method-inner>h2{font-size:22px;font-weight:800;margin-bottom:24px;color:#f0f0f0}
 .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.mc{background:#1e1e2e;border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:18px}
-.mc h3{font-size:11px;font-weight:700;color:#ff6080;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px}
+.mc{background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:18px}
+.mc h3{font-size:11px;font-weight:700;color:#ef4444;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px}
 .mc ul{list-style:none;padding:0}
-.mc li{font-size:12px;color:rgba(238,238,245,0.6);line-height:1.9;padding-left:12px;position:relative}
-.mc li::before{content:'·';position:absolute;left:0;color:#ff6080}
+.mc li{font-size:12px;color:#aaa;line-height:1.9;padding-left:12px;position:relative}
+.mc li::before{content:'·';position:absolute;left:0;color:#ef4444}
 
-footer{background:#0a0a14;text-align:center;padding:34px 24px;font-size:11px;color:rgba(238,238,245,0.28);letter-spacing:0.5px}
-footer a{color:rgba(238,238,245,0.45);text-decoration:none}
-footer a:hover{color:#ff4d6d}
+footer{background:#0f0f0f;border-top:1px solid rgba(255,255,255,0.07);text-align:center;padding:34px 24px;font-size:11px;color:#555;letter-spacing:0.5px}
+footer a{color:#777;text-decoration:none}
+footer a:hover{color:#ef4444}
 
 /* ── 退賽高峰圖表 ── */
-#peak-section{background:#13131f;padding:80px 0 60px}
+#peak-section{background:#0f0f0f;padding:80px 0 60px}
 .peak-charts{max-width:1000px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
-.chart-card{background:#1e1e2e;border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column}
-.chart-title{font-size:13px;font-weight:700;color:rgba(238,238,245,0.65);letter-spacing:1px;text-transform:uppercase;margin-bottom:22px}
-.chart-note{font-size:12px;color:rgba(238,238,245,0.45);line-height:1.7;margin-top:16px}
+.chart-card{background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column}
+.chart-title{font-size:12px;font-weight:700;color:#777;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px}
+.chart-note{font-size:12px;color:#999;line-height:1.7;margin-top:16px}
 
 /* 柱狀圖 */
-.bar-chart{display:flex;align-items:flex-end;gap:8px;padding-bottom:0}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;padding-bottom:0;border-bottom:1px solid rgba(255,255,255,0.13)}
 .bar-group{display:flex;flex-direction:column;align-items:center;flex:1;gap:0}
-.bar-wrap{width:100%;height:140px;display:flex;align-items:flex-end;justify-content:center}
-.bar{width:100%;height:var(--h,0%);min-height:2px;background:var(--clr);border-radius:4px 4px 0 0;transition:opacity .2s;opacity:.9}
+.bar-wrap{width:100%;height:140px;display:flex;align-items:flex-end;justify-content:center;flex-shrink:0}
+.bar{width:100%;height:var(--h,0%);min-height:2px;background:var(--clr);border-radius:4px 4px 0 0;transition:opacity .2s;opacity:.85}
 .bar-group:hover .bar{opacity:1}
-.bar-group.highlight .bar{box-shadow:0 0 16px var(--clr)}
-.bar-label{font-size:11px;color:rgba(238,238,245,0.5);margin-top:7px;white-space:nowrap}
-.bar-val{font-size:12px;font-weight:700;color:rgba(238,238,245,0.8);margin-top:2px}
-.bar-group.highlight .bar-val{color:#b06aff}
+.bar-group.highlight .bar{box-shadow:0 0 14px var(--clr);opacity:1}
+.bar-label{font-size:11px;color:#777;margin-top:7px;white-space:nowrap}
+.bar-val{font-size:12px;font-weight:700;color:#e0e0e0;margin-top:2px}
+.bar-group.highlight .bar-val{color:#a78bfa}
 
 /* 水平條狀圖 */
 .seg-chart{display:flex;flex-direction:column;gap:14px}
 .seg-row{display:flex;align-items:center;gap:10px}
-.seg-label{width:72px;font-size:11px;color:rgba(238,238,245,0.65);display:flex;align-items:center;gap:5px;flex-shrink:0}
+.seg-label{width:72px;font-size:11px;color:#aaa;display:flex;align-items:center;gap:5px;flex-shrink:0}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.seg-bar-wrap{flex:1;background:rgba(255,255,255,0.07);border-radius:4px;height:28px;position:relative;overflow:hidden}
+.seg-bar-wrap{flex:1;background:#2a2a2a;border-radius:4px;height:28px;position:relative;overflow:hidden}
 .seg-bar{height:100%;width:var(--w);background:var(--clr);border-radius:4px;display:flex;align-items:center;padding-left:8px;transition:width .6s ease;opacity:.9}
 .seg-row:hover .seg-bar{opacity:1}
 .seg-val{font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
-.seg-pct{width:50px;font-size:11px;color:rgba(238,238,245,0.5);text-align:right;flex-shrink:0}
-.highlight-row .seg-pct{color:#5dade2;font-weight:700}
+.seg-pct{width:50px;font-size:11px;color:#777;text-align:right;flex-shrink:0}
+.highlight-row .seg-pct{color:#60a5fa;font-weight:700}
 
 /* mini breakdown */
-.mini-breakdown{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08)}
-.mb-title{font-size:11px;color:rgba(238,238,245,0.4);letter-spacing:0.5px;margin-bottom:12px}
+.mini-breakdown{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07)}
+.mb-title{font-size:11px;color:#777;letter-spacing:0.5px;margin-bottom:12px}
 .mb-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.mb-label{width:60px;font-size:11px;color:rgba(238,238,245,0.6);flex-shrink:0}
-.mb-track{flex:1;background:rgba(255,255,255,0.08);border-radius:3px;height:10px;overflow:hidden}
+.mb-label{width:60px;font-size:11px;color:#aaa;flex-shrink:0}
+.mb-track{flex:1;background:#2a2a2a;border-radius:3px;height:10px;overflow:hidden}
 .mb-fill{height:100%;width:var(--w);border-radius:3px}
-.mb-num{width:80px;font-size:11px;color:rgba(238,238,245,0.5);text-align:right;flex-shrink:0}
+.mb-num{width:80px;font-size:11px;color:#666;text-align:right;flex-shrink:0}
 
 /* 24小時折線圖 */
 .peak-hour-card{max-width:1000px;margin:28px auto 0;padding:0 32px}
-.hour-chart-wrap{background:#1e1e2e;border:1px solid rgba(255,255,255,0.09);border-radius:14px;padding:28px 24px}
+.hour-chart-wrap{background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:28px 24px}
 #line-chart-svg{width:100%;display:block;overflow:visible}
-.lc-grid line{stroke:rgba(255,255,255,0.07);stroke-width:1}
-.lc-grid line.base{stroke:rgba(255,255,255,0.15)}
-.lc-area{fill:url(#areaGrad);opacity:0.55}
-.lc-line{fill:none;stroke:#ff4d6d;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
-.lc-dot{fill:#ff4d6d;stroke:#1e1e2e;stroke-width:2;cursor:pointer;transition:r .15s}
-.lc-dot:hover,.lc-dot.hi{r:6;fill:#ff8099}
-.lc-dot.zero{fill:#3a3a52;stroke:#3a3a52}
-.lc-xlabel{font-size:10px;fill:rgba(238,238,245,0.3);text-anchor:middle;font-family:Inter,sans-serif}
-.lc-ylabel{font-size:10px;fill:rgba(238,238,245,0.35);text-anchor:end;font-family:Inter,sans-serif}
-.lc-tooltip{pointer-events:none}
-.lc-tooltip rect{fill:#2a2a40;rx:6;stroke:rgba(255,255,255,0.15);stroke-width:1}
-.lc-tooltip text{font-size:12px;fill:#eeeef5;font-family:Inter,sans-serif;font-weight:600}
+.lc-grid line{stroke:rgba(255,255,255,0.06);stroke-width:1}
+.lc-grid line.base{stroke:rgba(255,255,255,0.12)}
+.lc-area{fill:url(#areaGrad);opacity:0.4}
+.lc-line{fill:none;stroke:#ef4444;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.lc-dot{fill:#ef4444;stroke:#1a1a1a;stroke-width:2;cursor:pointer;transition:r .15s}
+.lc-dot:hover,.lc-dot.hi{r:6}
+.lc-dot.zero{fill:#333;stroke:#333}
+.lc-xlabel{font-size:10px;fill:#555;text-anchor:middle;font-family:Inter,sans-serif}
+.lc-ylabel{font-size:10px;fill:#555;text-anchor:end;font-family:Inter,sans-serif}
+.lc-tooltip rect{fill:#111;stroke:rgba(255,255,255,0.1);stroke-width:1}
+.lc-tooltip text{fill:#f0f0f0;font-family:Inter,sans-serif;font-weight:600}
 .hour-legend{display:flex;gap:18px;margin-top:14px;flex-wrap:wrap}
-.hour-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(238,238,245,0.5)}
+.hour-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#666}
 .hour-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
-@media(max-width:768px){
-  .sticky-map{position:relative;width:100%;height:50vh;float:none}
-  .story-steps{margin-left:0}
-  .step{padding:40px 24px}
-  .method-grid{grid-template-columns:1fr}
-  .peak-charts{grid-template-columns:1fr}
+
+/* ══ 賽事介紹 ══ */
+#intro{background:#0f0f0f;padding:80px 0 100px}
+.intro-wrap{max-width:960px;margin:0 auto;padding:0 40px}
+
+/* 標題 */
+.intro-header{text-align:center;margin-bottom:44px}
+.intro-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:14px}
+.intro-title{font-size:clamp(22px,3vw,32px);font-weight:800;color:#f0f0f0;line-height:1.2}
+
+/* ══ 大卡（無白底無分割線）
+   左列(flex)：標籤 → 圖片 → 爬升副標（push to bottom）
+   右列      ：文字段落（靠頂）
+   底部跨全寬：爬升圖
+*/
+.intro-card{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-areas:
+    "left  right"
+    "elev  elev";
+  margin-bottom:32px;
+  align-items:start;
+}
+.ib-left{
+  grid-area:left;
+  padding:0 28px 24px 0;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  align-items:flex-start;
+}
+.ib-right{
+  grid-area:right;
+  padding:0 0 24px 28px;
+}
+.ib-elev{
+  grid-area:elev;
+  padding:20px 0 0;
+}
+
+/* 左列內部 */
+.intro-block-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:16px}
+.intro-img-wrap{border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);aspect-ratio:5/3;width:100%}
+.intro-img-wrap img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
+.intro-img-cap{font-size:11px;color:#555;margin-top:8px;line-height:1.5;margin-bottom:24px}
+/* 爬升副標緊接在下方 */
+.elev-block-title{font-size:12px;font-weight:700;color:#ccc;margin-bottom:4px;letter-spacing:0.3px;margin-top:0}
+.elev-block-sub{font-size:11px;color:#555;margin-bottom:0}
+
+/* 右列文字 */
+.ib-right p{font-size:14px;color:#999;line-height:1.85;margin-bottom:12px}
+.ib-right p:last-child{margin-bottom:0}
+.ib-right strong{color:#f0f0f0}
+
+/* ══ 爬升對比圖 ══ */
+#elev-chart{display:flex;flex-direction:column;gap:12px;width:100%}
+.elev-row{display:flex;align-items:center;gap:12px}
+.elev-row-hl .elev-row-label{color:#f0f0f0;font-weight:700}
+.elev-row-label{width:100px;flex-shrink:0;font-size:12px;color:#888;line-height:1.3}
+.elev-row-label span{display:block;font-size:10px;color:#555;font-weight:400;margin-top:2px}
+.highlight-label{color:#ef4444!important}
+.elev-track-wrap{flex:1;height:22px;display:flex;align-items:center;overflow:hidden}
+.elev-seg{
+  height:100%;
+  border-radius:3px;
+  flex-shrink:0;
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .9s cubic-bezier(.22,1,.36,1);
+}
+.elev-seg.animated{transform:scaleX(1)}
+
+/* ══ 歷年規則演變 ══ */
+.ib-timeline{margin-top:40px}
+.rules-header{margin-bottom:20px}
+.tl-list{display:flex;flex-direction:column;position:relative;padding-left:52px}
+.tl-list::before{content:'';position:absolute;left:20px;top:6px;bottom:6px;width:1px;background:linear-gradient(to bottom,#ef4444 0%,rgba(239,68,68,0.1) 100%)}
+.tl-item{position:relative;padding:0 0 18px 0}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:-36px;top:3px;width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0;box-shadow:0 0 0 3px rgba(239,68,68,0.12)}
+.tl-year{font-size:13px;font-weight:700;color:#f0f0f0;margin-bottom:4px;letter-spacing:0.3px}
+.tl-rules{list-style:none;padding:0;margin:0}
+.tl-rules li{font-size:12px;color:#777;line-height:1.7;padding-left:10px;position:relative}
+.tl-rules li::before{content:'—';position:absolute;left:0;color:#444;font-size:10px;top:1px}
+.tl-rules li+li{margin-top:1px}
+
+@media(max-width:600px){
+  .intro-wrap{padding:0 16px}
+  .ib-left{padding:0 12px 20px 0}
+  .ib-right{padding:0 0 20px 12px}
+  .ib-right p{font-size:12px;line-height:1.75}
+  .elev-row-label{width:72px;font-size:11px}
+  .tl-year{font-size:11px}
+  .tl-rules li{font-size:11px}
+  .tl-list{padding-left:40px}
 }
 </style>
 </head>
 <body>
 
 <section id="hero">
-  <div class="hero-tag">數據新聞 · HK4TUC 2021–2026</div>
+  <div class="hero-kicker">數據新聞 · HK4TUC 2021–2026</div>
   <h1>誰在哪裡<em>放棄</em>了？</h1>
-  <p class="lead">六年間 119 名選手挑戰香港四條法定遠足徑，全程 298km、逾 2 萬米累計爬升。其中 50 人未能走完——數據告訴我們，他們倒在哪裡。</p>
+  <div class="hero-divider"></div>
+  <p class="lead">六年間 119 名選手挑戰全港四條法定遠足徑，全程 298km、逾 2 萬米累計爬升。其中 50 人未能走完——我們用數據追蹤他們在哪裡停下，以及為什麼。</p>
+
   <div class="hero-stats">
-    <div><span class="hs-num">6</span><span class="hs-label">屆賽事</span></div>
-    <div><span class="hs-num">119</span><span class="hs-label">參賽人次</span></div>
-    <div><span class="hs-num">50</span><span class="hs-label">退賽人次</span></div>
-    <div><span class="hs-num">42%</span><span class="hs-label">平均退賽率</span></div>
+    <div class="hs-item">
+      <span class="hs-num">119</span>
+      <span class="hs-label">參賽人次（2021–2026）</span>
+    </div>
+    <div class="hs-item">
+      <span class="hs-num">50</span>
+      <span class="hs-label">退賽人次</span>
+    </div>
+    <div class="hs-item">
+      <span class="hs-num">42%</span>
+      <span class="hs-label">平均退賽率</span>
+    </div>
   </div>
+
   <div class="scroll-hint">
-    <span>向下滾動</span>
+    <span>向下滾動探索</span>
     <svg viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<section id="intro">
+  <div class="intro-wrap">
+
+    <!-- 居中標題 -->
+    <div class="intro-header">
+      <div class="intro-label">關於賽事</div>
+      <h2 class="intro-title">香港四徑超級挑戰<br/><span style="font-size:0.6em;font-weight:600;color:#6b7280">Hong Kong Four Trails Ultra Challenge</span></h2>
+    </div>
+
+    <!-- 大白卡 -->
+    <div class="intro-card">
+
+      <!-- 左列(flex)：標籤 → 圖片 → 爬升副標 -->
+      <div class="ib-left">
+        <div class="intro-block-label">賽事簡介</div>
+        <div class="intro-img-wrap">
+          <img src="postbox.jpg" alt="梅窩碼頭終點郵筒"/>
+        </div>
+        <p class="intro-img-cap">▲ 大嶼山梅窩碼頭外郵筒（攝於 2023 年 5 月）</p>
+        <div class="intro-block-label">爬升距離對比</div>
+        <div class="elev-block-title">14,500m 的爬升，相當於什麼？</div>
+        <div class="elev-block-sub">每個分格代表一次獨立攀登，紅條為 HK4TUC 全程</div>
+      </div>
+
+      <!-- 右列：文字段落 -->
+      <div class="ib-right">
+        <p>HK4TUC 是每年農曆新年舉行的超級馬拉松，選手須一次過跑完香港四大遠足徑——麥理浩徑、衛奕信徑、港島徑及鳳凰徑，終點是大嶼山梅窩碼頭外的一個郵筒。</p>
+        <p>全程 <strong>298 公里</strong>，累積爬升達 <strong>14,500 米</strong>，四條徑之間以交通工具轉場，賽事無正式組織、無補給站、無醫療支援，選手全程自負。</p>
+        <p>相當於連續完成 <strong>7 個馬拉松</strong>的距離，而累積爬升高度，則相當於從珠穆朗瑪峰大本營（5,364m）出發，攀登至頂峰三次還不夠——或者從地面走上台北101頂樓，往返 <strong>28 次</strong>。</p>
+      </div>
+
+      <!-- 底部跨全寬：爬升圖 -->
+      <div class="ib-elev">
+        <div id="elev-chart"></div>
+      </div>
+
+    </div>
+
+    <!-- 歷年規則演變 -->
+    <div class="ib-timeline">
+      <div class="rules-header">
+        <div class="intro-block-label">歷年規則演變</div>
+      </div>
+      <div class="tl-list">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2017</div>
+          <ul class="tl-rules"><li>「生還者」由不限時改為時限 80 小時</li></ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2019</div>
+          <ul class="tl-rules"><li>時限收緊至 75 小時</li></ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2020</div>
+          <ul class="tl-rules"><li>時限再收緊至 72 小時（現行標準）</li></ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2021</div>
+          <ul class="tl-rules"><li>禁止使用行山杖</li><li>禁止聆聽音樂</li></ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2022</div>
+          <ul class="tl-rules"><li>禁止使用止痛藥</li></ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2023</div>
+          <ul class="tl-rules"><li>起步改為傍晚出發</li><li>完成港島徑後須徒步往中環碼頭</li></ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2024</div>
+          <ul class="tl-rules"><li>起步時間於賽前 12 小時公布</li><li>藍田→太古港鐵段列為賽程，不可接受協助</li></ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-year">2025</div>
+          <ul class="tl-rules"><li>禁止使用手錶</li><li>起步公布縮至賽前 6 小時</li><li>鳳凰徑起步由 55 小時改為 54 小時</li></ul>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -214,28 +402,10 @@ footer a:hover{color:#ff4d6d}
     </div>
 
   </div>
-  <div style="clear:both"></div>
 </div>
 
-<section id="gps-section">
-  <div class="sec-head">
-    <div class="sec-tag">地圖二</div>
-    <h2>他們的 GPS 追蹤器，最後停在哪裡？</h2>
-    <p>每個圓點代表一名退賽選手的 GPS 最後記錄位置，按年份以顏色區分。點擊圓點可查看選手資訊。</p>
-  </div>
-  <div class="note-bar">
-    <p>⚠️ GPS 最後位置並非精確退賽地點——部分追蹤器在轉場期間仍在運作，最後記錄位置可能為集合點或交通途中。</p>
-  </div>
-  <div class="full-map">
-    <iframe src="map_dnf.html" title="退賽選手GPS最後位置" allowfullscreen></iframe>
-  </div>
-  <div class="map-credit">GPS 數據：dottrack.asia · 路線：HK4TUC 官方 KML · 統計期間：2021–2026</div>
-</section>
-
-<!-- ── 退賽高峰圖表 ── -->
 <section id="peak-section">
   <div class="sec-head">
-    <div class="sec-tag">數據圖表</div>
     <h2>退賽高峰在哪裡？</h2>
     <p>從年份與賽段兩個維度，看 50 次退賽的分佈規律。</p>
   </div>
@@ -411,7 +581,6 @@ footer a:hover{color:#ff4d6d}
         </ul>
       </div>
     </div>
-  </div>
 </section>
 
 <footer>
@@ -571,7 +740,7 @@ footer a:hover{color:#ff4d6d}
       var latlngs = seg.map(function(p){ return [p[0], p[1]]; });
       return L.polyline(latlngs, {
         color: d.color,
-        weight: d.weight,
+        weight: 4,
         opacity: 0,            // 預設透明，但已加入地圖完成渲染
         smoothFactor: 1.2
       });
@@ -618,6 +787,23 @@ footer a:hover{color:#ff4d6d}
   var currentStep = -1;
   var revealedUpTo = -1;   // 已亮起到哪一條
 
+  /* 平滑透明度過渡動畫 */
+  function fadeTo(fg, targetOp, dur){
+    var layers = fg.getLayers();
+    var startOps = layers.map(function(l){ return typeof l.options.opacity === 'number' ? l.options.opacity : 0; });
+    var startTime = performance.now();
+    dur = dur || 550;
+    function tick(now){
+      var t = Math.min((now - startTime) / dur, 1);
+      var ease = 1 - Math.pow(1 - t, 3);
+      layers.forEach(function(l, i){
+        l.setStyle({opacity: startOps[i] + (targetOp - startOps[i]) * ease});
+      });
+      if(t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   /* 各步驟顯示哪些路線（含前面所有已亮起的）*/
   function setStep(n){
     if(n === currentStep) return;
@@ -628,10 +814,10 @@ footer a:hover{color:#ff4d6d}
       ORDER.forEach(function(k){
         var fg = trailPolylines[k];
         if(!fg) return;
-        fg.getLayers().forEach(function(l){ l.setStyle({opacity:0}); });
+        fadeTo(fg, 0, 500);
       });
       revealedUpTo = -1;
-      map.flyTo([22.35, 114.1], 10, {duration:1.4, easeLinearity:0.3});
+      map.flyTo([22.35, 114.1], 10, {duration:1.5, easeLinearity:0.2});
       return;
     }
 
@@ -651,7 +837,7 @@ footer a:hover{color:#ff4d6d}
     }
     revealedUpTo = Math.max(revealedUpTo, targetIdx);
 
-    /* 高亮當前賽段，其他已亮起的賽段降低透明度 */
+    /* 高亮當前賽段，其他已亮起的賽段降低透明度（平滑過渡）*/
     ORDER.forEach(function(k, idx){
       if(idx > revealedUpTo) return;
       var fg = trailPolylines[k];
@@ -659,7 +845,7 @@ footer a:hover{color:#ff4d6d}
       var d = TRAIL_DATA[k];
       if(!d) return;
       var targetOp = (idx === targetIdx) ? d.opacity : d.opacity * 0.22;
-      fg.getLayers().forEach(function(l){ l.setStyle({opacity: targetOp}); });
+      fadeTo(fg, targetOp, 550);
     });
 
     /* 飛到當前賽段 */
@@ -671,7 +857,7 @@ footer a:hover{color:#ff4d6d}
       d.segments.forEach(function(seg){ seg.forEach(function(p){ allPts.push([p[0],p[1]]); }); });
       if(allPts.length){
         var bnds = L.latLngBounds(allPts);
-        map.flyToBounds(bnds, {padding:[80,80], maxZoom:13, duration:1.2, easeLinearity:0.25});
+        map.flyToBounds(bnds, {padding:[60,60], maxZoom:12, duration:1.4, easeLinearity:0.15});
       }
     }
   }
@@ -687,7 +873,7 @@ footer a:hover{color:#ff4d6d}
         else if(n > 0) setStep(n);
       }
     });
-  }, { threshold: 0.45, rootMargin: '-15% 0px -15% 0px' });
+  }, { threshold: 0.5, rootMargin: '-20% 0px -20% 0px' });
 
   steps.forEach(function(el){ obs.observe(el); });
 
@@ -695,5 +881,100 @@ footer a:hover{color:#ff4d6d}
   window.addEventListener('resize', function(){ map.invalidateSize(); });
 })();
 </script>
+
+<script>
+/* ── 爬升對比圖 ── */
+(function(){
+  var wrap = document.getElementById('elev-chart');
+  if(!wrap) return;
+
+  /*
+   * 設計原則：
+   * - 以 HK4TUC 14500m 為 100% 基準（佔滿 track 全寬）
+   * - 其他山用各自比例的百分比寬度
+   * - 馬拉松：7個方塊，每塊寬度 = (42/14500)*100%，gap 用固定3px
+   * - 動畫：transform:scaleX(0→1)，不依賴動態像素，無時序問題
+   */
+
+  var BASE = 14500;
+
+  var ROWS = [
+    {
+      id: 'hk4tuc', label: 'HK4TUC', sub: '14,500 m', highlight: true,
+      segs: [{ pct: 100, color: '#ef4444' }]
+    },
+    {
+      id: 'everest', label: '珠峰', sub: '× 3 = 10,452m',
+      segs: [
+        { pct: 3484/BASE*100, color: '#ef4444' },
+        { pct: 3484/BASE*100, color: '#ef4444' },
+        { pct: 3484/BASE*100, color: '#ef4444' },
+      ]
+    },
+    {
+      id: 'fuji', label: '富士山', sub: '× 3 = 11,328m',
+      segs: [
+        { pct: 3776/BASE*100, color: '#ef4444' },
+        { pct: 3776/BASE*100, color: '#ef4444' },
+        { pct: 3776/BASE*100, color: '#ef4444' },
+      ]
+    },
+    {
+      id: 'taipei101', label: '台北101', sub: '× 28 = 14,224m',
+      segs: (function(){
+        var h = 508/BASE*100;
+        var arr = [];
+        for(var i=0;i<28;i++) arr.push({pct:h, color:'#ef4444'});
+        return arr;
+      })()
+    },
+  ];
+
+  ROWS.forEach(function(row, ri){
+    var rowDiv = document.createElement('div');
+    rowDiv.className = 'elev-row' + (row.highlight ? ' elev-row-hl' : '');
+
+    var lbl = document.createElement('div');
+    lbl.className = 'elev-row-label' + (row.highlight ? ' highlight-label' : '');
+    lbl.innerHTML = row.label + '<span>' + row.sub + '</span>';
+    rowDiv.appendChild(lbl);
+
+    var track = document.createElement('div');
+    track.className = 'elev-track-wrap';
+
+    if(row.isMarathon){
+      /* 已移除馬拉松行，此分支不會執行 */
+    } else {
+      row.segs.forEach(function(seg, si){
+        var s = document.createElement('div');
+        s.className = 'elev-seg';
+        s.style.background = seg.color;
+        s.style.width = seg.pct.toFixed(3) + '%';
+        if(si < row.segs.length - 1) s.style.marginRight = '3px';
+        if(row.highlight) s.style.boxShadow = '0 0 0 1px rgba(239,68,68,0.25)';
+        s.style.transitionDelay = (si * 0.06) + 's';
+        if(!row.highlight) s.style.opacity = (0.45 + (si % 4) * 0.18).toFixed(2);
+        track.appendChild(s);
+      });
+    }
+
+    rowDiv.appendChild(track);
+    wrap.appendChild(rowDiv);
+  });
+
+  /* 動畫觸發：加 animated class 即可，純 CSS transform */
+  function animate(){
+    wrap.querySelectorAll('.elev-seg,.marathon-seg').forEach(function(s){
+      s.classList.add('animated');
+    });
+  }
+
+  var obs = new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting){ animate(); obs.disconnect(); }
+  }, {threshold: 0.1});
+  obs.observe(wrap);
+})();
+</script>
+
 </body>
 </html>
