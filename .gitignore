@@ -12,8 +12,9 @@ data/raw/
 data/gps/
 hk4tuc_2026_data/
 
-# 完整 GPS 軌跡序列（個人移動數據，不公開）
-data/csv/all_years_gps.csv
+# 所有處理後 CSV（data 只保留分析報告）
+data/csv/
+dnf_for_tableau.csv
 
 # Flourish 导出（临时产物）
 data/flourish_dnf_map.csv
@@ -25,3 +26,7 @@ data/charts/
 
 # Excel（CSV 已足够）
 data/HK4TUC_All_Years.xlsx
+
+# Tableau
+*.twb
+*.twbx
