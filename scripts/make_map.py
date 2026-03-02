@@ -12,7 +12,18 @@ from pathlib import Path
 # ── 配置 ──────────────────────────────────────────────────────────
 HK_JSON   = Path("/Users/yumok/Desktop/hk.json")
 DNF_CSV   = Path("hk4tuc_all_years/csv/all_years_dnf.csv")
-ROUTE_KML = Path("hk4tuc_route_official.kml")
+# ROUTE_KML = Path("hk4tuc_route_official.kml")
+# Resolve hk4tuc_route_official.kml from common locations so README/目录调整不会导致脚本找不到文件
+_possible_route_paths = [
+    Path("hk4tuc_route_official.kml"),
+    Path("data/hk4tuc_route_official.kml"),
+    Path(__file__).resolve().parent.parent / "hk4tuc_route_official.kml",
+]
+ROUTE_KML = next((p for p in _possible_route_paths if p.exists()), _possible_route_paths[0])
+if not ROUTE_KML.exists():
+    raise FileNotFoundError(
+        "hk4tuc_route_official.kml not found. Checked: " + ", ".join(str(p) for p in _possible_route_paths)
+    )
 OUTPUT    = Path("hk4tuc_all_years/HK4TUC_DNF_Map_v2.html")
 
 YEAR_COLORS = {
