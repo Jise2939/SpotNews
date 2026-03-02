@@ -61,9 +61,9 @@ body{font-family:'Inter',sans-serif;background:#0f0f0f;color:#f0f0f0;overflow-x:
 .method-inner>h2{font-size:22px;font-weight:800;margin-bottom:24px;color:#f0f0f0}
 .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .mc{background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:18px}
-.mc h3{font-size:11px;font-weight:700;color:#ef4444;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px}
+.mc h3{font-size:12px;font-weight:700;color:#ef4444;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:9px}
 .mc ul{list-style:none;padding:0}
-.mc li{font-size:12px;color:#bbb;line-height:1.9;padding-left:12px;position:relative}
+.mc li{font-size:13px;color:#bbb;line-height:1.9;padding-left:12px;position:relative}
 .mc li::before{content:'·';position:absolute;left:0;color:#ef4444}
 
 /* ── GPS 最後位置地圖 ── */
@@ -74,7 +74,7 @@ body{font-family:'Inter',sans-serif;background:#0f0f0f;color:#f0f0f0;overflow-x:
 .note-bar{max-width:680px;margin:0 auto 16px;padding:0 32px}
 .note-bar p{background:rgba(255,193,7,0.07);border-left:3px solid rgba(255,193,7,0.35);padding:9px 13px;font-size:13px;color:#777;border-radius:0 6px 6px 0;line-height:1.6}
 
-footer{background:#0f0f0f;border-top:1px solid rgba(255,255,255,0.07);text-align:center;padding:34px 24px;font-size:11px;color:#777;letter-spacing:0.5px}
+footer{background:#0f0f0f;border-top:1px solid rgba(255,255,255,0.07);text-align:center;padding:34px 24px;font-size:13px;color:#777;letter-spacing:0.5px}
 footer a{color:#999;text-decoration:none}
 footer a:hover{color:#ef4444}
 
@@ -82,8 +82,8 @@ footer a:hover{color:#ef4444}
 #peak-section{background:#0f0f0f;padding:80px 0 60px}
 .peak-charts{max-width:1000px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
 .chart-card{background:#1a1a1a;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column}
-.chart-title{font-size:12px;font-weight:700;color:#777;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px}
-.chart-note{font-size:12px;color:#aaa;line-height:1.7;margin-top:16px}
+.chart-title{font-size:13px;font-weight:700;color:#888;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px}
+.chart-note{font-size:13px;color:#aaa;line-height:1.7;margin-top:16px}
 
 /* 柱狀圖 */
 .bar-chart{display:flex;align-items:flex-end;gap:8px;padding-bottom:0;border-bottom:1px solid rgba(255,255,255,0.13)}
@@ -92,30 +92,30 @@ footer a:hover{color:#ef4444}
 .bar{width:100%;height:var(--h,0%);min-height:2px;background:var(--clr);border-radius:4px 4px 0 0;transition:opacity .2s;opacity:.85}
 .bar-group:hover .bar{opacity:1}
 .bar-group.highlight .bar{box-shadow:0 0 14px var(--clr);opacity:1}
-.bar-label{font-size:11px;color:#777;margin-top:7px;white-space:nowrap}
-.bar-val{font-size:12px;font-weight:700;color:#e0e0e0;margin-top:2px}
+.bar-label{font-size:12px;color:#888;margin-top:7px;white-space:nowrap}
+.bar-val{font-size:14px;font-weight:700;color:#e0e0e0;margin-top:2px}
 .bar-group.highlight .bar-val{color:#a78bfa}
 
 /* 水平條狀圖 */
 .seg-chart{display:flex;flex-direction:column;gap:14px}
 .seg-row{display:flex;align-items:center;gap:10px}
-.seg-label{width:72px;font-size:11px;color:#aaa;display:flex;align-items:center;gap:5px;flex-shrink:0}
+.seg-label{width:76px;font-size:13px;color:#aaa;display:flex;align-items:center;gap:5px;flex-shrink:0}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .seg-bar-wrap{flex:1;background:#2a2a2a;border-radius:4px;height:28px;position:relative;overflow:hidden}
 .seg-bar{height:100%;width:var(--w);background:var(--clr);border-radius:4px;display:flex;align-items:center;padding-left:8px;transition:width .6s ease;opacity:.9}
 .seg-row:hover .seg-bar{opacity:1}
-.seg-val{font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
-.seg-pct{width:50px;font-size:11px;color:#777;text-align:right;flex-shrink:0}
+.seg-val{font-size:13px;font-weight:700;color:#fff;white-space:nowrap}
+.seg-pct{width:52px;font-size:12px;color:#888;text-align:right;flex-shrink:0}
 .highlight-row .seg-pct{color:#60a5fa;font-weight:700}
 
 /* mini breakdown */
 .mini-breakdown{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07)}
-.mb-title{font-size:11px;color:#777;letter-spacing:0.5px;margin-bottom:12px}
+.mb-title{font-size:12px;color:#888;letter-spacing:0.5px;margin-bottom:12px}
 .mb-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.mb-label{width:60px;font-size:11px;color:#aaa;flex-shrink:0}
+.mb-label{width:60px;font-size:12px;color:#aaa;flex-shrink:0}
 .mb-track{flex:1;background:#2a2a2a;border-radius:3px;height:10px;overflow:hidden}
 .mb-fill{height:100%;width:var(--w);border-radius:3px}
-.mb-num{width:80px;font-size:11px;color:#999;text-align:right;flex-shrink:0}
+.mb-num{width:85px;font-size:12px;font-weight:600;color:#bbb;text-align:right;flex-shrink:0}
 
 /* 24小時折線圖 */
 .peak-hour-card{max-width:1000px;margin:28px auto 0;padding:0 32px}
@@ -133,7 +133,7 @@ footer a:hover{color:#ef4444}
 .lc-tooltip rect{fill:#111;stroke:rgba(255,255,255,0.1);stroke-width:1}
 .lc-tooltip text{fill:#f0f0f0;font-family:Inter,sans-serif;font-weight:600}
 .hour-legend{display:flex;gap:18px;margin-top:14px;flex-wrap:wrap}
-.hour-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#999}
+.hour-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#999}
 .hour-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
 
@@ -143,7 +143,7 @@ footer a:hover{color:#ef4444}
 
 /* 標題 */
 .intro-header{text-align:center;margin-bottom:44px}
-.intro-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:14px}
+.intro-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:14px}
 .intro-title{font-size:clamp(22px,3vw,32px);font-weight:800;color:#f0f0f0;line-height:1.2}
 
 /* ══ 大卡（無白底無分割線）
@@ -178,13 +178,13 @@ footer a:hover{color:#ef4444}
 }
 
 /* 左列內部 */
-.intro-block-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:16px}
+.intro-block-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:16px}
 .intro-img-wrap{border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);aspect-ratio:5/3;width:100%}
 .intro-img-wrap img{width:100%;height:100%;display:block;object-fit:cover;object-position:center}
-.intro-img-cap{font-size:11px;color:#777;margin-top:8px;line-height:1.5;margin-bottom:24px}
+.intro-img-cap{font-size:12px;color:#777;margin-top:8px;line-height:1.5;margin-bottom:24px}
 /* 爬升副標緊接在下方 */
-.elev-block-title{font-size:12px;font-weight:700;color:#ccc;margin-bottom:4px;letter-spacing:0.3px;margin-top:0}
-.elev-block-sub{font-size:11px;color:#777;margin-bottom:0}
+.elev-block-title{font-size:14px;font-weight:700;color:#ccc;margin-bottom:4px;letter-spacing:0.3px;margin-top:0}
+.elev-block-sub{font-size:12px;color:#777;margin-bottom:0}
 
 /* 右列文字 */
 .ib-right p{font-size:14px;color:#b0b0b0;line-height:1.85;margin-bottom:12px}
@@ -195,8 +195,8 @@ footer a:hover{color:#ef4444}
 #elev-chart{display:flex;flex-direction:column;gap:12px;width:100%}
 .elev-row{display:flex;align-items:center;gap:12px}
 .elev-row-hl .elev-row-label{color:#f0f0f0;font-weight:700}
-.elev-row-label{width:100px;flex-shrink:0;font-size:12px;color:#aaa;line-height:1.3}
-.elev-row-label span{display:block;font-size:10px;color:#777;font-weight:400;margin-top:2px}
+.elev-row-label{width:110px;flex-shrink:0;font-size:14px;font-weight:700;color:#ccc;line-height:1.3}
+.elev-row-label span{display:block;font-size:12px;color:#aaa;font-weight:600;margin-top:3px}
 .highlight-label{color:#ef4444!important}
 .elev-track-wrap{flex:1;height:22px;display:flex;align-items:center;overflow:hidden}
 .elev-seg{
@@ -217,10 +217,10 @@ footer a:hover{color:#ef4444}
 .tl-item{position:relative;padding:0 0 18px 0}
 .tl-item:last-child{padding-bottom:0}
 .tl-dot{position:absolute;left:-36px;top:3px;width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0;box-shadow:0 0 0 3px rgba(239,68,68,0.12)}
-.tl-year{font-size:13px;font-weight:700;color:#f0f0f0;margin-bottom:4px;letter-spacing:0.3px}
+.tl-year{font-size:14px;font-weight:700;color:#f0f0f0;margin-bottom:4px;letter-spacing:0.3px}
 .tl-rules{list-style:none;padding:0;margin:0}
-.tl-rules li{font-size:12px;color:#999;line-height:1.7;padding-left:10px;position:relative}
-.tl-rules li::before{content:'—';position:absolute;left:0;color:#666;font-size:10px;top:1px}
+.tl-rules li{font-size:13px;color:#999;line-height:1.7;padding-left:10px;position:relative}
+.tl-rules li::before{content:'—';position:absolute;left:0;color:#666;font-size:11px;top:1px}
 .tl-rules li+li{margin-top:1px}
 
 @media(max-width:600px){
@@ -292,7 +292,7 @@ footer a:hover{color:#ef4444}
       <div class="ib-right">
         <p>HK4TUC 是每年農曆新年舉行的超級馬拉松，選手須一次過跑完香港四大遠足徑——麥理浩徑、衛奕信徑、港島徑及鳳凰徑，終點是大嶼山梅窩碼頭外的一個郵筒。</p>
         <p>全程 <strong>298 公里</strong>，累積爬升達 <strong>14,500 米</strong>，四條徑之間以交通工具轉場，賽事無正式組織、無補給站、無醫療支援，選手全程自負。</p>
-        <p>相當於連續完成 <strong>7 個馬拉松</strong>的距離，而累積爬升高度，則相當於從富士山山腳攀登至頂峰（3,626m）連續 <strong>4 次</strong>——或者從地面走上台北101頂樓，往返 <strong>28 次</strong>。</p>
+        <p>相當於連續完成 <strong>7 個馬拉松</strong>的距離，而累積爬升高度 14,500m，<strong>比珠峰海拔（8,849m）還高</strong>，相當於從富士山山腳攀登至頂峰（3,626m）連續 <strong>4 次</strong>——或者從地面走上台北101頂樓，往返 <strong>28 次</strong>。</p>
       </div>
 
       <!-- 底部跨全寬：爬升圖 -->
@@ -935,12 +935,9 @@ footer a:hover{color:#ef4444}
       segs: [{ pct: 100, color: '#ef4444' }]
     },
     {
-      id: 'everest', label: '珠峰', sub: '× 4 = 13,940m',
+      id: 'everest', label: '珠峰頂', sub: '8,849m 海拔',
       segs: [
-        { pct: 3485/BASE*100, color: '#ef4444' },
-        { pct: 3485/BASE*100, color: '#ef4444' },
-        { pct: 3485/BASE*100, color: '#ef4444' },
-        { pct: 3485/BASE*100, color: '#ef4444' },
+        { pct: 8849/BASE*100, color: '#ef4444' },
       ]
     },
     {
