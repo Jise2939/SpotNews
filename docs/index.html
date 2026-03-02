@@ -66,6 +66,14 @@ body{font-family:'Inter',sans-serif;background:#0f0f0f;color:#f0f0f0;overflow-x:
 .mc li{font-size:12px;color:#aaa;line-height:1.9;padding-left:12px;position:relative}
 .mc li::before{content:'·';position:absolute;left:0;color:#ef4444}
 
+/* ── GPS 最後位置地圖 ── */
+#gps-section{background:#0f0f0f;padding:80px 0 0}
+.full-map{width:100%;height:88vh;min-height:600px}
+.full-map iframe{width:100%;height:100%;border:none;display:block}
+.map-credit{background:#0a0a0a;text-align:center;padding:13px;font-size:11px;color:#555;letter-spacing:0.5px}
+.note-bar{max-width:680px;margin:0 auto 16px;padding:0 32px}
+.note-bar p{background:rgba(255,193,7,0.07);border-left:3px solid rgba(255,193,7,0.35);padding:9px 13px;font-size:13px;color:#777;border-radius:0 6px 6px 0;line-height:1.6}
+
 footer{background:#0f0f0f;border-top:1px solid rgba(255,255,255,0.07);text-align:center;padding:34px 24px;font-size:11px;color:#555;letter-spacing:0.5px}
 footer a{color:#777;text-decoration:none}
 footer a:hover{color:#ef4444}
@@ -541,6 +549,20 @@ footer a:hover{color:#ef4444}
     </div>
   </div>
 
+</section>
+
+<section id="gps-section">
+  <div class="sec-head">
+    <h2>他們的 GPS 追蹤器，最後停在哪裡？</h2>
+    <p>每個圓點代表一名退賽選手的 GPS 最後記錄位置，按年份以顏色區分。點擊圓點可查看選手資訊。</p>
+  </div>
+  <div class="note-bar">
+    <p>⚠️ GPS 最後位置並非精確退賽地點——部分追蹤器在轉場期間仍在運作，最後記錄位置可能為集合點或交通途中。</p>
+  </div>
+  <div class="full-map">
+    <iframe src="map_dnf.html" title="退賽選手GPS最後位置" allowfullscreen></iframe>
+  </div>
+  <div class="map-credit">GPS 數據：dottrack.asia · 路線：HK4TUC 官方 KML · 統計期間：2021–2026</div>
 </section>
 
 <section id="method">
