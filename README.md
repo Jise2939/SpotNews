@@ -61,7 +61,6 @@ docs/                  # GitHub Pages 發佈目錄
   index.html           # 主專頁
   hk4tuc-logo.png      # HK4TUC 賽事 logo
   postbox.jpg          # 終點郵筒照片
-  comic.JPG            # 規則漫畫（展示用）
 
 data/                  # 原始與中繼資料（公開倉庫僅保留報告）
   DNF_All_Years_Report.md    # 分析報告（保留於 repo）
