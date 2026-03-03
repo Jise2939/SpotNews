@@ -1963,6 +1963,22 @@
 }
             ).addTo(map_00f0460024f9d4de0a6a5ff8ff14a9da);
 
+            // 添加四個徑的標籤
+            var trailLabels = [
+                {name: '麥理浩徑', lat: 22.42, lng: 114.08, color: '#e74c3c'},
+                {name: '衛奕信徑', lat: 22.35, lng: 114.22, color: '#3498db'},
+                {name: '港島徑', lat: 22.28, lng: 114.15, color: '#27ae60'},
+                {name: '鳳凰徑', lat: 22.25, lng: 113.93, color: '#f39c12'}
+            ];
+            trailLabels.forEach(function(trail){
+                var icon = L.divIcon({
+                    className: 'trail-label',
+                    html: '<span style="background:'+trail.color+';color:#fff;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;">'+trail.name+'</span>',
+                    iconSize: [80, 20],
+                    iconAnchor: [40, 10]
+                });
+                L.marker([trail.lat, trail.lng], {icon: icon}).addTo(map_00f0460024f9d4de0a6a5ff8ff14a9da);
+            });
         
 </script>
 </html>

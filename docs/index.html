@@ -33,12 +33,12 @@ body{font-family:'Inter',sans-serif;background:#0f0f0f;color:#f0f0f0;overflow-x:
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
 #story{position:relative;background:#0f0f0f;display:flex;align-items:flex-start}
-.sticky-map{position:sticky;top:0;height:100vh;width:55%;flex-shrink:0;overflow:hidden;background:#0f0f0f}
+.sticky-map{position:sticky;top:0;height:100vh;width:55%;flex-shrink:0;overflow:hidden;background:#0f0f0f;will-change:transform;transform:translateZ(0);backface-visibility:hidden}
 #trail-map{width:100%;height:100%}
 .leaflet-container{background:#0f0f0f!important}
 .trail-tooltip{background:rgba(0,0,0,0.88);border:1px solid rgba(255,255,255,0.12);color:#f0f0f0;font-size:12px;padding:6px 10px;border-radius:6px;box-shadow:0 2px 12px rgba(0,0,0,0.4);line-height:1.6;pointer-events:none}
 .trail-tooltip b{font-weight:700}
-.story-steps{flex:1;padding:0 0 120vh 0;background:#0f0f0f}
+.story-steps{flex:1;padding:0 0 120vh 0;background:#0f0f0f;transform:translateZ(0)}
 .step{min-height:90vh;display:flex;align-items:center;padding:60px 48px 60px 44px}
 .step-inner{max-width:400px}
 .step-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;font-size:13px;font-weight:700;margin-bottom:14px}
@@ -97,15 +97,15 @@ footer a:hover{color:#ef4444}
 .chart-note{font-size:12px;color:#cccccc;line-height:1.7;margin-top:12px}
 
 /* 柱狀圖 */
-.bar-chart{display:flex;align-items:flex-end;gap:6px;padding-bottom:0;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.13)}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;padding-bottom:0;margin-bottom:12px}
 .bar-group{display:flex;flex-direction:column;align-items:center;flex:1;gap:0;min-width:0}
-.bar-wrap{width:100%;height:140px;display:flex;align-items:flex-end;justify-content:center;flex-shrink:0;position:relative}
+.bar-wrap{width:100%;height:120px;display:flex;align-items:flex-end;justify-content:center;flex-shrink:0;position:relative}
 .bar{width:100%;height:var(--h,0%);min-height:2px;background:var(--clr);border-radius:3px 3px 0 0;transition:opacity .2s;opacity:.85;position:relative}
 .bar-group:hover .bar{opacity:1}
 .bar-group.highlight .bar{box-shadow:0 0 10px var(--clr);opacity:1}
 .bar-val{font-size:11px;font-weight:700;color:#e0e0e0;position:absolute;bottom:calc(100% + 3px);left:50%;transform:translateX(-50%);white-space:nowrap}
 .bar-group.highlight .bar-val{color:#a78bfa}
-.bar-label{font-size:11px;color:#888;margin-top:6px;white-space:nowrap}
+.bar-label{font-size:11px;color:#888;margin-top:6px;white-space:nowrap;border-bottom:none}
 
 /* 水平條狀圖 */
 .seg-chart{display:flex;flex-direction:column;gap:10px}
@@ -147,60 +147,137 @@ footer a:hover{color:#ef4444}
 
 
 /* ══ 賽事介紹 ══ */
-#intro{background:#0f0f0f;padding:50px 0 50px}
-.intro-wrap{max-width:960px;margin:0 auto;padding:0 32px}
+#intro{background:#0f0f0f;padding:60px 0 60px}
+.intro-wrap{max-width:1000px;margin:0 auto;padding:0 40px}
 
-/* 標題 */
-.intro-header{text-align:center;margin-bottom:24px}
-.intro-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:10px}
+.intro-header{text-align:center;margin-bottom:48px}
+.intro-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:10px}
 .intro-title{font-size:clamp(24px,3vw,36px);font-weight:800;color:#f0f0f0;line-height:1.2}
 
-/* ══ 大卡（無白底無分割線）
-   左列(flex)：標籤 → 圖片 → 爬升副標（push to bottom）
-   右列      ：文字段落（靠頂）
-   底部跨全寬：爬升圖
-*/
+/* 兩欄：左文右圖 */
 .intro-card{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr 320px;
+  grid-template-rows:auto auto;
   grid-template-areas:
-    "left  right"
+    "info  photo"
     "elev  elev";
-  margin-bottom:16px;
-  gap:16px;
+  gap:0 48px;
   align-items:start;
 }
-.ib-left{
-  grid-area:left;
-  padding:0 16px 16px 0;
+
+/* 左欄：郵筒照片 */
+.ib-photo{
+  grid-area:photo;
   display:flex;
   flex-direction:column;
-  gap:0;
-  align-items:center;
-  text-align:left;
+  gap:6px;
 }
-.ib-right{
-  grid-area:right;
-  padding:0 0 16px 16px;
+.ib-photo-img{
+  border-radius:12px;
+  overflow:hidden;
+  line-height:0;
+  flex-shrink:0;
 }
+.ib-photo img{
+  width:100%;
+  height:480px;
+  object-fit:cover;
+  object-position:center 55%;
+  display:block;
+  border-radius:12px;
+}
+
+/* 右欄：logo + 文字 */
+.ib-info{
+  grid-area:info;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+  padding-top:0;
+}
+
+/* Logo + 紀錄片封面並排 */
+.ib-logos-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  width:100%;
+}
+.ib-logo-item{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.ib-logo{
+  display:block;
+  line-height:0;
+  border-radius:8px;
+  overflow:hidden;
+  height:140px;
+}
+.ib-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* 文字區塊 */
+.ib-text-block{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.ib-section-label{
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#ef4444;
+  font-weight:700;
+}
+.ib-text-block p{
+  font-size:14px;
+  color:#cccccc;
+  line-height:1.85;
+  margin:0;
+}
+.ib-text-block p strong{color:#f0f0f0}
+
+/* 數字標籤列 */
+.ib-stats{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  border-left:2px solid rgba(239,68,68,0.35);
+  padding-left:20px;
+}
+.ib-stat-row{display:flex;flex-direction:row;align-items:baseline;gap:10px}
+.ib-stat-num{font-size:42px;font-weight:800;color:#f0f0f0;letter-spacing:-1px;line-height:1;flex-shrink:0}
+.ib-stat-label{font-size:13px;color:#888;line-height:1.4}
+
+/* 圖說（郵筒 & logo 統一） */
+.ib-photo-cap, .ib-logo-cap{
+  font-size:11px;
+  color:#666;
+  line-height:1.5;
+  margin:0;
+}
+
+/* 底部跨全寬：爬升圖 */
 .ib-elev{
   grid-area:elev;
-  padding:8px 0 0 0;
+  margin-top:40px;
+  padding-top:32px;
+  border-top:1px solid rgba(255,255,255,0.07);
 }
+.intro-block-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:8px}
+.elev-block-title{font-size:13px;font-weight:700;color:#e8e8e8;margin-bottom:3px;letter-spacing:0.3px}
+.elev-block-sub{font-size:11px;color:#777;margin-bottom:12px}
 
-/* 左列內部 */
-.intro-block-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:12px}
-.intro-img-wrap{border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);width:100%;max-width:280px;margin:0 auto}
-.intro-img-wrap img{width:100%;height:auto;display:block;object-fit:cover;object-position:center}
-.intro-img-cap{font-size:10px;color:#484848;margin-top:5px;line-height:1.4;margin-bottom:0;text-align:center}
-/* 爬升副標緊接在下方 */
-.elev-block-title{font-size:13px;font-weight:700;color:#e8e8e8;margin-bottom:3px;letter-spacing:0.3px;margin-top:0}
-.elev-block-sub{font-size:11px;color:#aaaaaa;margin-bottom:0}
-
-/* 右列文字 */
-.ib-right p{font-size:14px;color:#cccccc;line-height:1.85;margin-bottom:12px}
-.ib-right p:last-child{margin-bottom:0}
-.ib-right strong{color:#f5f5f5}
+/* 廢棄但保留不報錯 */
+.intro-img-wrap{display:none}
+.intro-img-cap,.ib-logo-wrap,.ib-photo-wrap,.ib-left,.ib-right{display:none}
 
 /* ══ 爬升對比圖 ══ */
 #elev-chart{display:flex;flex-direction:column;gap:10px;width:100%}
@@ -246,15 +323,14 @@ footer a:hover{color:#ef4444}
   .peak-charts{grid-template-columns:1fr;gap:20px}
   .chart-card{padding:20px}
   .bar-wrap{height:140px}
+  .intro-card{grid-template-columns:1fr;grid-template-areas:"info""photo""elev";gap:24px}
+  .ib-photo img{height:280px}
 }
 @media(max-width:600px){
   #intro{padding:40px 0 40px}
   .intro-wrap{padding:0 16px}
-  .ib-left{padding:0 0 16px 0}
-  .ib-right{padding:0 0 16px 0}
-  .ib-right p{font-size:13px;line-height:1.7}
+  .ib-photo img{height:220px}
   .elev-row-label{width:72px;font-size:11px}
-  .intro-img-wrap{max-width:220px}
   .peak-charts{padding:0 16px;gap:16px}
   .chart-card{padding:16px}
   .chart-title{font-size:11px;margin-bottom:14px}
@@ -276,7 +352,7 @@ footer a:hover{color:#ef4444}
   <div class="hero-kicker">HK4TUC 2021-2026 未完賽選手數據圖譜</div>
   <h1>極限賽道的<em>斷點</em></h1>
   <div class="hero-divider"></div>
-  <p class="lead">自 2014 年創辦以來，HK4TUC（香港四徑超級挑戰）累計吸引 264 名選手參賽。在全程 298 公里、累計爬升 14,500 米的考驗下，能在 60 小時限時內完賽的「完賽者」共 42 人。</p>
+  <p class="lead">自 2014 年創辦以來，HK4TUC（香港四徑超級挑戰）累計吸引 264 名選手參賽。在全程 298 公里、累計爬升 14,500 米的考驗下，能在 60 小時限時內完成的「完賽者」共 42 人。</p>
   <p class="lead">本報導聚焦於 2021 至 2026 年間的賽事數據。在此期間，共有 119 名選手參與挑戰，其中 50 人未能在 72 小時的「生還者」時限內完成。本文將透過數據分析，呈現這些選手退賽的分佈路段， 以及分析造成中途退出的具體路段特徵及潛在原因。</p>
 
   <div class="hero-stats">
@@ -309,35 +385,61 @@ footer a:hover{color:#ef4444}
       <h2 class="intro-title">香港四徑超級挑戰<br/><span style="font-size:0.6em;font-weight:600;color:#6b7280">Hong Kong Four Trails Ultra Challenge</span></h2>
     </div>
 
-    <!-- 大白卡 -->
+    <!-- 大卡 -->
     <div class="intro-card">
 
-      <!-- 左列：Logo + 全程資料 -->
-      <div class="ib-left">
-        <div class="intro-block-label">賽事簡介</div>
-        <div style="margin-bottom:16px;margin-top:4px;text-align:center">
-          <div style="display:inline-block;background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 24px;box-shadow:0 2px 12px rgba(0,0,0,0.3)">
-            <img src="hk4tuc-logo.png" alt="HK4TUC Logo" style="max-width:160px;width:100%;opacity:0.95;display:block;border-radius:6px"/>
+      <!-- 左：郵筒照片 -->
+      <div class="ib-photo">
+        <img src="postbox.jpg" alt="梅窩碼頭終點郵筒"/>
+        <p class="ib-photo-cap">▲ 大嶼山梅窩碼頭外的綠色郵筒，是 HK4TUC 的終點標誌</p>
+      </div>
+
+      <!-- 右：logo + 賽事說明 + 數字 -->
+      <div class="ib-info">
+
+        <div class="ib-logos-row">
+          <div class="ib-logo-item">
+            <div class="ib-logo">
+              <img src="hk4tuc-logo.png" alt="HK4TUC Logo"/>
+            </div>
+            <p class="ib-logo-cap">▲ HK4TUC 官方賽事圖標</p>
+          </div>
+          <div class="ib-logo-item">
+            <div class="ib-logo">
+              <img src="dabuzhou-poster.jpg" alt="大步走紀錄片封面"/>
+            </div>
+            <p class="ib-logo-cap">▲ 香港四徑於 2025 年發布的「大步走」紀錄片封面</p>
           </div>
         </div>
-        <p style="font-size:14px;color:#cccccc;line-height:1.8;margin-bottom:8px">全程 <strong style="color:#f0f0f0">298 公里</strong>，累積爬升達 <strong style="color:#f0f0f0">14,500 米</strong>，四條徑之間以交通工具轉場，賽事無正式組織、無補給站、無醫療支援，選手全程自負。</p>
-        <p style="font-size:14px;color:#cccccc;line-height:1.8;margin-bottom:0">相當於連續完成 <strong style="color:#f0f0f0">7 個馬拉松</strong>的距離，而累積爬升高度 14,500m，<strong style="color:#f0f0f0">比珠峰海拔（8,849m）還高</strong>，相當於從富士山山腳攀登至頂峰（3,626m）連續 <strong style="color:#f0f0f0">4 次</strong>；或者從地面走上台北101頂樓，往返 <strong style="color:#f0f0f0">28 次</strong>。</p>
-      </div>
 
-      <!-- 右列：賽事介紹 + 郵筒照片 -->
-      <div class="ib-right">
-        <p style="font-size:14px;color:#cccccc;line-height:1.85;margin-bottom:8px">HK4TUC 是每年農曆新年舉行的超級馬拉松，選手須一次過跑完香港四大遠足徑––麥理浩徑（<strong style="color:#f0f0f0">100km</strong>）、衛奕信徑（<strong style="color:#f0f0f0">78km</strong>）、港島徑（<strong style="color:#f0f0f0">50km</strong>）及鳳凰徑（<strong style="color:#f0f0f0">70km</strong>），終點是大嶼山梅窩碼頭外的一個郵筒。</p>
-        <div class="intro-img-wrap" style="margin-top:8px">
-          <img src="postbox.jpg" alt="梅窩碼頭終點郵筒"/>
+        <div class="ib-text-block">
+          <div class="ib-section-label">賽事概覽</div>
+          <p>HK4TUC 是每年農曆新年舉行的非官方超級馬拉松，選手須一次連續跑完香港四大遠足徑——<strong>麥理浩徑</strong>（100km）、<strong>衛奕信徑</strong>（78km）、<strong>港島徑</strong>（50km）及<strong>鳳凰徑</strong>（70km），終點是大嶼山梅窩碼頭外的一個郵筒。</p>
+          <p>賽事無正式組織、無補給站、無醫療支援，選手全程自負。</p>
         </div>
-        <p class="intro-img-cap">▲ 大嶼山梅窩碼頭外郵筒——HK4TUC 終點</p>
+
+        <div class="ib-stats">
+          <div class="ib-stat-row">
+            <span class="ib-stat-num">298 km</span>
+            <span class="ib-stat-label">全程距離</span>
+          </div>
+          <div class="ib-stat-row">
+            <span class="ib-stat-num">14,500 m</span>
+            <span class="ib-stat-label">累積爬升</span>
+          </div>
+          <div class="ib-stat-row">
+            <span class="ib-stat-num">60 / 72 h</span>
+            <span class="ib-stat-label">完賽 / 生還者 時限 (2020年起)</span>
+          </div>
+        </div>
+
       </div>
 
-      <!-- 底部跨全寬：副標題 + 爬升圖 -->
+      <!-- 底部跨全寬：爬升圖 -->
       <div class="ib-elev">
         <div class="intro-block-label">爬升距離對比</div>
         <div class="elev-block-title">14,500m 的爬升，相當於⋯⋯</div>
-        <div class="elev-block-sub" style="margin-bottom:12px">每個分格代表一次獨立攀登，紅條為 HK4TUC 全程</div>
+        <div class="elev-block-sub">每個分格代表一次獨立攀登，紅條為 HK4TUC 全程</div>
         <div id="elev-chart"></div>
       </div>
 
@@ -346,7 +448,6 @@ footer a:hover{color:#ef4444}
   </div>
 </section>
 
-<!-- ── 過渡標題 ── -->
 <section id="dnf-intro" style="background:#0f0f0f;padding:50px 32px 30px">
   <div class="sec-head" style="margin-bottom:0">
     <div class="intro-label">四徑分析</div>
@@ -364,10 +465,10 @@ footer a:hover{color:#ef4444}
     <div class="step" data-step="0">
       <div class="step-inner">
         <h2>四條徑，一個不停歇的挑戰</h2>
-        <p>HK4TUC 要求選手依序完成全港四條法定遠足徑，四條徑之間以交通工具轉場，全程無關門時間。</p>
-        <p>左側地圖呈現四條徑的官方賽道。<strong>繼續向下滾動，各賽段將依序亮起。</strong></p>
+        <p><strong>參加者必須以獨立、無外援的形式徒步完成四條路徑。</strong></p>
+        <p>四大徑需按指定順序：麥理浩徑 → 衛奕信徑 → 港島徑 → 鳳凰徑，並且由該四徑的終點逆向跑回起點，各個徑有分別單獨的關門或起始時間限制。</p>
         <hr class="step-div"/>
-        <p style="font-size:12px;color:rgba(232,232,238,0.3)">賽程：麥理浩徑 → 衛奕信徑 → 港島徑 → 鳳凰徑</p>
+        <p style="font-size:13px;color:rgba(255, 255, 255, 0.963)">繼續向下滾動，左側地圖將依次呈現四條徑的官方賽道。</p>
       </div>
     </div>
 
@@ -375,7 +476,7 @@ footer a:hover{color:#ef4444}
       <div class="step-inner">
         <div class="step-num bg-mac">1</div>
         <h2><span class="c-mac">第一段：麥理浩徑</span><br/>100km，13 人退賽</h2>
-        <p>全長 100 公里，共 10 段，由北潭湧向西橫貫新界，途經大帽山（全港最高峰，957m）、針山、草山等，終點為屯門。累積爬升約 4,200 米，完成後限時 18 小時。</p>
+        <p>全長 100 公里，共 10 段，由北潭湧向西橫貫新界，途經大帽山（全港最高峰，957m）、針山、草山等，終點為屯門。累積爬升約 4,200 米，完成限時 18 小時。</p>
         <hr class="step-div"/>
         <p style="font-size:12px;font-weight:700;color:#f87171;margin-bottom:4px">⚠ 主要難點</p>
         <ul class="diff-list">
@@ -393,7 +494,7 @@ footer a:hover{color:#ef4444}
           </details>
         </ul>
         <hr class="step-div"/>
-        <p>13 名退賽者中，<span class="stat-pill bg-mac">途中 8 人</span>在賽道上停下，另有 <span class="stat-pill bg-mac">完成後 5 人</span>跑完 100km 後才在轉場期間決定放棄。</p>
+        <p>13 名退賽者中，<span class="stat-pill bg-mac">8 人途中</span>在賽道上停下，另有 <span class="stat-pill bg-mac">5 人完成後</span>在轉場期間決定放棄。</p>
       </div>
     </div>
 
@@ -419,7 +520,7 @@ footer a:hover{color:#ef4444}
           </details>
         </ul>
         <hr class="step-div"/>
-        <p>退賽人數最多的一段，佔所有退賽的 <strong>48%</strong>。<span class="stat-pill bg-wil">途中 19 人</span>放棄，<span class="stat-pill bg-wil">完成後 5 人</span>在轉場時退出。</p>
+        <p>退賽人數最多的一段，佔所有退賽的 <strong>48%</strong>。<span class="stat-pill bg-wil">19 人途中</span>放棄，<span class="stat-pill bg-wil">5 人完成後</span>在轉場時退出。</p>
       </div>
     </div>
 
@@ -441,7 +542,7 @@ footer a:hover{color:#ef4444}
           </details>
         </ul>
         <hr class="step-div"/>
-        <p><span class="stat-pill bg-hk">途中 10 人</span>在港島徑停步，<span class="stat-pill bg-hk">完成後 1 人</span>在轉場時退賽。</p>
+        <p><span class="stat-pill bg-hk">10 人途中</span>在港島徑停步，<span class="stat-pill bg-hk">1 人完成後 </span>在轉場時退賽。</p>
       </div>
     </div>
 
@@ -461,8 +562,10 @@ footer a:hover{color:#ef4444}
             <summary><span>⏱ 54 小時起步限制</span><span class="diff-arrow">▶</span></summary>
             <div class="diff-body">選手須在總起步後 54 小時內完成鳳凰徑起步，若在前三段耗時過多，可能無緣踏上最後一段。</div>
           </details>
+
         </ul>
         <hr class="step-div"/>
+        <p>六年間共有 <span class="stat-pill bg-lau">2 人</span>在此退賽。</p>
         <p style="font-size:15px;color:rgba(232,232,238,0.3)"></p>
       </div>
     </div>
@@ -492,39 +595,39 @@ footer a:hover{color:#ef4444}
 
   <div class="peak-charts">
 
-    <!-- 左：按年份 -->
+    <!-- 按年份 -->
     <div class="chart-card">
-      <h3 class="chart-title">按年份：各屆退賽人數</h3>
+      <h3 class="chart-title">按年份：各屆退賽率</h3>
       <div class="bar-chart" id="chart-year" style="flex:1;align-items:flex-end">
         <div class="bar-group">
-          <div class="bar-wrap"><div class="bar" style="--h:63.6%;--clr:#e74c3c"><div class="bar-val">7</div></div></div>
+          <div class="bar-wrap"><div class="bar" style="--h:70%;--clr:#e74c3c"><div class="bar-val">39%</div></div></div>
           <div class="bar-label">2021</div>
         </div>
         <div class="bar-group">
-          <div class="bar-wrap"><div class="bar" style="--h:81.8%;--clr:#e67e22"><div class="bar-val">9</div></div></div>
+          <div class="bar-wrap"><div class="bar" style="--h:100%;--clr:#e67e22"><div class="bar-val">56%</div></div></div>
           <div class="bar-label">2022</div>
         </div>
         <div class="bar-group">
-          <div class="bar-wrap"><div class="bar" style="--h:90.9%;--clr:#f39c12"><div class="bar-val">10</div></div></div>
+          <div class="bar-wrap"><div class="bar" style="--h:71%;--clr:#f39c12"><div class="bar-val">40%</div></div></div>
           <div class="bar-label">2023</div>
         </div>
         <div class="bar-group">
-          <div class="bar-wrap"><div class="bar" style="--h:81.8%;--clr:#27ae60"><div class="bar-val">9</div></div></div>
+          <div class="bar-wrap"><div class="bar" style="--h:84%;--clr:#27ae60"><div class="bar-val">47%</div></div></div>
           <div class="bar-label">2024</div>
         </div>
         <div class="bar-group">
-          <div class="bar-wrap"><div class="bar" style="--h:36.4%;--clr:#2980b9"><div class="bar-val">4</div></div></div>
+          <div class="bar-wrap"><div class="bar" style="--h:48%;--clr:#2980b9"><div class="bar-val">27%</div></div></div>
           <div class="bar-label">2025</div>
         </div>
-        <div class="bar-group highlight">
-          <div class="bar-wrap"><div class="bar" style="--h:100%;--clr:#8e44ad"><div class="bar-val">11</div></div></div>
+        <div class="bar-group">
+          <div class="bar-wrap"><div class="bar" style="--h:75%;--clr:#8e44ad"><div class="bar-val">42%</div></div></div>
           <div class="bar-label">2026</div>
         </div>
       </div>
-      <p class="chart-note">2026 年退賽人數創六年新高（11 人），2025 年最低（4 人）。</p>
+      <p class="chart-note">2022 年退賽率最高（56%），2025 年最低（27%）。</p>
     </div>
 
-    <!-- 右：按赛段 -->
+    <!-- 按赛段 -->
     <div class="chart-card">
       <h3 class="chart-title">按賽段：各段退賽人數</h3>
       <div class="seg-chart">
@@ -721,7 +824,7 @@ footer a:hover{color:#ef4444}
   svg.appendChild(el('path',{'class':'lc-line', d:linePath}));
 
   // tooltip group
-  var tip = el('g', {'class':'lc-tooltip', visibility:'hidden'});
+  var tip = el('g', {'class':'lc-tooltip', 'visibility':'hidden'});
   var tipRect = el('rect', {x:0,y:0,width:72,height:32,rx:6,fill:'#2a2a40',stroke:'rgba(255,255,255,0.15)','stroke-width':'1'});
   var tipText = txt('text', {x:36,y:14,'text-anchor':'middle',fill:'#eeeef5','font-size':'11','font-family':'Inter,sans-serif','font-weight':'600'}, '');
   var tipSub  = txt('text', {x:36,y:26,'text-anchor':'middle',fill:'rgba(238,238,245,0.5)','font-size':'10','font-family':'Inter,sans-serif'}, '');
@@ -890,7 +993,7 @@ footer a:hover{color:#ef4444}
     /* 路線已預先加入地圖，只需做 opacity 動畫 */
     var layers = fg.getLayers();
     var start = performance.now();
-    var dur = 1100;
+    var dur = 1400;
     function tick(now){
       var p = Math.min((now-start)/dur, 1);
       var op = easeOut(p) * targetOpacity;
@@ -910,10 +1013,10 @@ footer a:hover{color:#ef4444}
     var layers = fg.getLayers();
     var startOps = layers.map(function(l){ return typeof l.options.opacity === 'number' ? l.options.opacity : 0; });
     var startTime = performance.now();
-    dur = dur || 550;
+    dur = dur || 900;
     function tick(now){
       var t = Math.min((now - startTime) / dur, 1);
-      var ease = 1 - Math.pow(1 - t, 3);
+      var ease = 1 - Math.pow(1 - t, 4);
       layers.forEach(function(l, i){
         l.setStyle({opacity: startOps[i] + (targetOp - startOps[i]) * ease});
       });
@@ -938,7 +1041,7 @@ footer a:hover{color:#ef4444}
         if(ep){ ep.startM.setOpacity(0); ep.endM.setOpacity(0); }
       });
       revealedUpTo = -1;
-      map.flyTo([22.35, 114.1], 10, {duration:1.5, easeLinearity:0.2});
+      map.flyTo([22.35, 114.1], 10, {duration:1.8, easeLinearity:0.1});
       return;
     }
 
@@ -987,7 +1090,7 @@ footer a:hover{color:#ef4444}
       d.segments.forEach(function(seg){ seg.forEach(function(p){ allPts.push([p[0],p[1]]); }); });
       if(allPts.length){
         var bnds = L.latLngBounds(allPts);
-        map.flyToBounds(bnds, {padding:[60,60], maxZoom:12, duration:1.4, easeLinearity:0.15});
+        map.flyToBounds(bnds, {padding:[60,60], maxZoom:12, duration:1.8, easeLinearity:0.1});
       }
     }
   }
@@ -1002,7 +1105,7 @@ footer a:hover{color:#ef4444}
     debounceTimer = setTimeout(function(){
       if(pendingStep !== currentStep) setStep(pendingStep);
       debounceTimer = null;
-    }, 80);
+    }, 120);
   }
   var obs = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
@@ -1031,7 +1134,6 @@ footer a:hover{color:#ef4444}
    * 設計原則：
    * - 以 HK4TUC 14500m 為 100% 基準（佔滿 track 全寬）
    * - 其他山用各自比例的百分比寬度
-   * - 馬拉松：7個方塊，每塊寬度 = (42/14500)*100%，gap 用固定3px
    * - 動畫：transform:scaleX(0→1)，不依賴動態像素，無時序問題
    */
 
@@ -1085,7 +1187,6 @@ footer a:hover{color:#ef4444}
     track.className = 'elev-track-wrap';
 
     if(row.isMarathon){
-      /* 已移除馬拉松行，此分支不會執行 */
     } else {
       var n = row.segs.length;
       /* 動態計算每塊百分比，扣除 gap（n-1 個 1px），
